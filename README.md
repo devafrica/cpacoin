@@ -47,7 +47,7 @@ However, if you wish to create _portable_ binaries that can be shared between sy
 -   `mkdir build`
 -   `cd build`
 -   `cmake ..`
--   `make`
+-   `make -j2`
 
 The binaries will be in the `src` folder when you are complete.
 
@@ -80,7 +80,7 @@ The binaries will be in the `src` folder when you are complete.
 *   `mkdir build`
 *   `cd build`
 *   `cmake ..`
-*   `make`
+*   `make -j2`
 
 The binaries will be in the `src` folder when you are complete.
 
