@@ -1,4 +1,4 @@
-CPA Coin Compile
+CPA Coin Compile from source
 
 Compiling CpaCoin
 Table of Contents
