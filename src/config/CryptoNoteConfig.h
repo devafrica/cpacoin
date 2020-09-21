@@ -13,6 +13,7 @@
 #include <initializer_list>
 #include <limits>
 #include <string>
+#include <unordered_map>
 
 namespace CryptoNote {
 namespace parameters {
