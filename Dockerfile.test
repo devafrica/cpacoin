@@ -17,7 +17,7 @@ ADD https://github.com/just-containers/socklog-overlay/releases/download/v2.1.0-
 RUN tar xzf /tmp/socklog-overlay-amd64.tar.gz -C /
 
 # Get the latest checkpoints (we don't care about being _100%_ up-to-date, but we need to be past block 350K for the algo change to CN_lite_v1)
-ADD https://raw.githubusercontent.com/turtlecoin/checkpoints/master/checkpoints.csv /tmp/
+ADD https://raw.githubusercontent.com/devafrica/checkpoints/master/checkpoints.csv /tmp/
 
 # In a multi-node testnet, we'll want to have the slave nodes "wait" for the master node to wake up, so let's get ready
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/
