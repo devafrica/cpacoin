@@ -300,7 +300,7 @@ const char     P2P_STAT_TRUSTED_PUB_KEY[]                    = "";
     const uint64_t LEVELDB_MAX_FILE_SIZE_MB = 1024; // 1024MB = 1GB
 
 
-const char     LATEST_VERSION_URL[]                          = "http://latest.cryptopay.org.za";
+const char     LATEST_VERSION_URL[]                          = "https://github.com/devafrica/cpacoin/";
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";
 const static   boost::uuids::uuid CRYPTONOTE_NETWORK         =
 {
