@@ -65,7 +65,7 @@ const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
 const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 6;
 
-const uint64_t MINIMUM_FEE                                   = UINT64_C(100);
+const uint64_t MINIMUM_FEE                                   = UINT64_C(1000);
 
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
