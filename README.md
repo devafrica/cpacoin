@@ -201,3 +201,9 @@ The binaries will be in the `src/Release` folder when you are complete.
 -   `cpacoind.exe --version`
 
 [^ Return To Top](#compiling-cpacoin)
+
+Install pm2 to run pm2 just type pm2 l after you installed it great for keeping your services organized.
+npm install -g pm2@latest
+pm2 startup
+pm2 start index.js --name blockchain-cache-api -i max
+pm2 save
