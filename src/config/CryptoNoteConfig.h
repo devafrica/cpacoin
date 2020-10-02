@@ -65,12 +65,12 @@ const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
 const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 6;
 
-const uint64_t MINIMUM_FEE                                   = UINT64_C(1000);
+const uint64_t MINIMUM_FEE                                   = UINT64_C(10000);
 
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
 
-        const double MINIMUM_FEE_PER_BYTE_V1 = 50.00 / FEE_PER_BYTE_CHUNK_SIZE;
+        const double MINIMUM_FEE_PER_BYTE_V1 = 500.00 / FEE_PER_BYTE_CHUNK_SIZE;
 
         /* Height for our first fee to byte change to take effect. */
         const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 1000;
@@ -130,9 +130,9 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
 
 
-        const uint64_t MAX_OUTPUT_SIZE_NODE   = 950'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_NODE   = 5'000'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_CLIENT = 900'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
 
         const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 13200;
 
