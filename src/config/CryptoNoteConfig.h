@@ -130,9 +130,9 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
 
 
-        const uint64_t MAX_OUTPUT_SIZE_NODE   = 250'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_NODE   = 950'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_CLIENT = 100'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_CLIENT = 900'000'00;
 
         const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 13200;
 
