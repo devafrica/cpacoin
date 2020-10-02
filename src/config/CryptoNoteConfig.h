@@ -130,11 +130,11 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
 
 
-        const uint64_t MAX_OUTPUT_SIZE_NODE   = 250'000'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_NODE   = 250'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_CLIENT = 100'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 2000000;
+        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 13200;
 
 
 /* For new projects forked from this code base, the values immediately below
@@ -169,7 +169,7 @@ const size_t   FUSION_TX_MIN_IN_OUT_COUNT_RATIO              = 4;
    to help curtail fusion transaction spam. */
 const size_t FUSION_TX_MAX_POOL_COUNT = 20;
 const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1 = 90;
-const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 2200000;
+const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 13500;
 
 const uint32_t UPGRADE_HEIGHT_V2                             = 20;
 const uint32_t UPGRADE_HEIGHT_V3                             = 30;
