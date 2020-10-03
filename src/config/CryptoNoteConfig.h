@@ -1,7 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -45,7 +44,7 @@ const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V3              = 130;
 const unsigned EMISSION_SPEED_FACTOR                         = 19;
 static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED_FACTOR");
 
-/* Premine amount WHY? because we swapped network So dont bash the coin */
+/* Premine amount */
 const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(50000000000000);
 
 const char     GENESIS_COINBASE_TX_HEX[]   = "013201ff000180c0f4c198af0b02d393c988ad557b7cf8d94d7399751b3174fd62eaf9cbf8061c862bfa234958e12101422eca328fb0226976770cf10683a793046dc149a72d93e2e8f0d1a88f69715b";
@@ -65,15 +64,15 @@ const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
 const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 6;
 
-const uint64_t MINIMUM_FEE                                   = UINT64_C(1000);
+const uint64_t MINIMUM_FEE                                   = UINT64_C(10);
 
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
 
-        const double MINIMUM_FEE_PER_BYTE_V1 = 500.00 / FEE_PER_BYTE_CHUNK_SIZE;
+        const double MINIMUM_FEE_PER_BYTE_V1 = 50.00 / FEE_PER_BYTE_CHUNK_SIZE;
 
         /* Height for our first fee to byte change to take effect. */
-        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 1000;
+        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 100;
 
 
 
@@ -130,7 +129,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
 
 
-        const uint64_t MAX_OUTPUT_SIZE_NODE   = 5'000'000'00;
+        const uint64_t MAX_OUTPUT_SIZE_NODE   = 250'000'000'00;
 
         const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
 
@@ -138,7 +137,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
 
 /* For new projects forked from this code base, the values immediately below
-   should be changed to 0 to prevent issues with transaction processing
+   should be changed to 0 to prevent issues with transaction processing 
    and other possible unexpected behavior */
 const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 15;
 const uint64_t BLOCK_BLOB_SHUFFLE_CHECK_HEIGHT               = 16;
@@ -195,7 +194,7 @@ const uint64_t FORK_HEIGHTS[] =
     80,  // 5
     100, // 6
     120, // 7
-
+   
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
@@ -300,7 +299,7 @@ const char     P2P_STAT_TRUSTED_PUB_KEY[]                    = "";
     const uint64_t LEVELDB_MAX_FILE_SIZE_MB = 1024; // 1024MB = 1GB
 
 
-const char     LATEST_VERSION_URL[]                          = "https://github.com/devafrica/cpacoin/";
+const char     LATEST_VERSION_URL[]                          = "http://latest.cryptopay.org.za";
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";
 const static   boost::uuids::uuid CRYPTONOTE_NETWORK         =
 {
