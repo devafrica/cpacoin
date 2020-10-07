@@ -69,7 +69,7 @@ const uint64_t MINIMUM_FEE                                   = UINT64_C(10);
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
 
-        const double MINIMUM_FEE_PER_BYTE_V1 = 50.00 / FEE_PER_BYTE_CHUNK_SIZE;
+        const double MINIMUM_FEE_PER_BYTE_V1 = 500000 / FEE_PER_BYTE_CHUNK_SIZE;
 
         /* Height for our first fee to byte change to take effect. */
         const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 100;
