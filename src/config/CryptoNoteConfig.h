@@ -137,7 +137,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
 
 /* For new projects forked from this code base, the values immediately below
-   should be changed to 0 to prevent issues with transaction processing 
+   should be changed to 0 to prevent issues with transaction processing
    and other possible unexpected behavior */
 const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 15;
 const uint64_t BLOCK_BLOB_SHUFFLE_CHECK_HEIGHT               = 16;
@@ -168,7 +168,7 @@ const size_t   FUSION_TX_MIN_IN_OUT_COUNT_RATIO              = 4;
    to help curtail fusion transaction spam. */
 const size_t FUSION_TX_MAX_POOL_COUNT = 20;
 const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1 = 90;
-const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 2200000;
+const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 20000;
 
 const uint32_t UPGRADE_HEIGHT_V2                             = 20;
 const uint32_t UPGRADE_HEIGHT_V3                             = 30;
@@ -194,11 +194,11 @@ const uint64_t FORK_HEIGHTS[] =
     80,  // 5
     100, // 6
     120, // 7
-   
+    20000, // 8
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
-const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 6;
+const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 7;
 
 const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
@@ -208,7 +208,7 @@ const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
    This will default to zero if the FORK_HEIGHTS array is empty, so you don't
    need to change it manually. */
-const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 6: SOFTWARE_SUPPORTED_FORK_INDEX;
+const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 7: SOFTWARE_SUPPORTED_FORK_INDEX;
 
  /* Make sure CURRENT_FORK_INDEX is a valid index, unless FORK_HEIGHTS is empty */
  static_assert(
