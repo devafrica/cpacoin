@@ -66,7 +66,7 @@ However, if you wish to create _portable_ binaries that can be shared between sy
 -   `sudo apt install -y libboost-all-dev libssl-dev gcc-8 g++-8 cmake`
 -   `export CC=gcc-8`
 -   `export CXX=g++-8`
--   `git clone -b master --single-branch https://github.com/devafrica/cpacoin`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
 -   `cd cpacoin`
 -   `mkdir build`
 -   `cd build`
@@ -99,7 +99,7 @@ The binaries will be in the `src` folder when you are complete.
 *   `sudo pip install cmake`
 *   `export CC=clang-6.0`
 *   `export CXX=clang++-6.0`
-*   `git clone -b master --single-branch https://github.com/devafrica/cpacoin`
+*   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
 *   `cd cpacoin`
 *   `mkdir build`
 *   `cd build`
@@ -124,7 +124,7 @@ _CentOS compile instructions provided by @brandonlehmann_
 -   `./bootstrap.sh --prefix=/usr/local/`
 -   `./b2 -j$(nproc) -d0 install --with-system --with-filesystem --with-thread --with-date_time --with-chrono --with-regex --with-serialization --with-program_options`
 -   `cd ..`
--   `git clone https://github.com/devafrica/cpacoin/`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
 -   `mkdir -p cpacoin/build`
 -   `cd cpacoin/build`
 -   `cmake3 ..`
@@ -140,7 +140,7 @@ The binaries will be in the `src` folder when you are complete.
 **Note:** If you want to use clang, ensure you set the environment variables `CC` and `CXX`.
 See the ubuntu instructions for an example.
 
--   `git clone -b master --single-branch https://github.com/devafrica/cpacoin`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
 -   `cd cpacoin`
 -   `mkdir build`
 -   `cd build`
@@ -171,7 +171,7 @@ The binaries will be in the `src` folder when you are complete.
 -   `ln -s /usr/local/opt/llvm@8 /usr/local/opt/llvm`
 -   `export CC=/usr/local/opt/llvm@8/bin/clang`
 -   `export CXX=/usr/local/opt/llvm@8/bin/clang++`
--   `git clone -b master --single-branch https://github.com/devafrica/cpacoin`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
 -   `cd cpacoin`
 -   `mkdir build`
 -   `cd build`
