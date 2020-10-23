@@ -64,7 +64,7 @@ const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
 const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 6;
 
-const uint64_t MINIMUM_FEE                                   = UINT64_C(10000);
+const uint64_t MINIMUM_FEE                                   = UINT64_C(100);
 
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
@@ -133,7 +133,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
         const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 2000000;
+        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 30000;
 
 
 /* For new projects forked from this code base, the values immediately below
@@ -209,7 +209,7 @@ const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
    This will default to zero if the FORK_HEIGHTS array is empty, so you don't
    need to change it manually. */
-const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 7: SOFTWARE_SUPPORTED_FORK_INDEX;
+const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 8: SOFTWARE_SUPPORTED_FORK_INDEX;
 
  /* Make sure CURRENT_FORK_INDEX is a valid index, unless FORK_HEIGHTS is empty */
  static_assert(
