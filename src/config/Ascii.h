@@ -1,4 +1,6 @@
 // Copyright (c) 2018, The TurtleCoin Developers
+// Copyright (c) 2020, The CryptoPayAfrica Developers
+// Copyright (c) 2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information
 
@@ -13,7 +15,7 @@ const std::string windowsAsciiArt =
     "  | |   | '__| | | | '_ \\| __/ _ \\| |_) / _` | | | | / _ \\ | |_| '__| |/ __/ _` |  \n"
     "  | |___| |  | |_| | |_) | || (_) |  __/ (_| | |_| |/ ___ \\|  _| |  | | (_| (_| |  \n"
     "   \\____|_|   \\__, | .__/ \\__\\___/|_|   \\__,_|\\__, /_/   \\_\\_| |_|  |_|\\___\\__,_|  \n"
-    "            |___/|_| CPA v 3.1 Hardfork         |___/                              \n"
+    "              |___/|_|   CPA v 4.1 Destiny    |___/                              \n"
     "                                                                                   \n";
 
 const std::string nonWindowsAsciiArt =
@@ -23,7 +25,7 @@ const std::string nonWindowsAsciiArt =
     "  | |   | '__| | | | '_ \\| __/ _ \\| |_) / _` | | | | / _ \\ | |_| '__| |/ __/ _` |  \n"
     "  | |___| |  | |_| | |_) | || (_) |  __/ (_| | |_| |/ ___ \\|  _| |  | | (_| (_| |  \n"
     "   \\____|_|   \\__, | .__/ \\__\\___/|_|   \\__,_|\\__, /_/   \\_\\_| |_|  |_|\\___\\__,_|  \n"
-    "            |___/|_| CPA v 3.1 Hardfork         |___/                              \n"
+    "              |___/|_|   CPA v 4.1 Destiny    |___/                              \n"
     "                                                                                   \n";
 
 //  Windows has some characters it won't display in a terminal. If your ascii
