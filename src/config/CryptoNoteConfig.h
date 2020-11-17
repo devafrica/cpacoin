@@ -176,8 +176,8 @@ const uint32_t UPGRADE_HEIGHT_V2                             = 2;
 const uint32_t UPGRADE_HEIGHT_V3                             = 3;
 const uint32_t UPGRADE_HEIGHT_V4                             = 4; // Upgrade height for CN-Lite Variant 1 switch.
 const uint32_t UPGRADE_HEIGHT_V5                             = 5; // Upgrade height for CN-T Variant 2 switch.
-/* const uint32_t UPGRADE_HEIGHT_V6                          = 50000; // Upgrade height for Chukwa switch. */
-/*const uint32_t UPGRADE_HEIGHT_CURRENT                      = UPGRADE_HEIGHT_V6; */
+const uint32_t UPGRADE_HEIGHT_V6                             = 500000; // Upgrade height for Chukwa switch.
+const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V5;
 
 const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
 const uint32_t UPGRADE_VOTING_WINDOW                         = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
@@ -194,7 +194,7 @@ const uint64_t FORK_HEIGHTS[] =
     5,  // 3
     10,  // 4
     100000, // 5
-    200000, //9
+    500000, //9
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
@@ -235,7 +235,7 @@ const char     CRYPTONOTE_NAME[]                             = "cpacoin";
     const uint8_t BLOCK_MAJOR_VERSION_3 = 3; /* UPGRADE_HEIGHT_V3 */
     const uint8_t BLOCK_MAJOR_VERSION_4 = 4; /* UPGRADE_HEIGHT_V4 */
     const uint8_t BLOCK_MAJOR_VERSION_5 = 5; /* UPGRADE_HEIGHT_V5 */
-  /* const uint8_t BLOCK_MAJOR_VERSION_6 = 6; */ /* UPGRADE_HEIGHT_V6 */
+    const uint8_t BLOCK_MAJOR_VERSION_6 = 6; /* UPGRADE_HEIGHT_V6 */
 
     const uint8_t BLOCK_MINOR_VERSION_0 = 0;
 
@@ -248,7 +248,7 @@ const char     CRYPTONOTE_NAME[]                             = "cpacoin";
             {BLOCK_MAJOR_VERSION_3, Crypto::cn_slow_hash_v0}, /* UPGRADE_HEIGHT_V3 */
             {BLOCK_MAJOR_VERSION_4, Crypto::cn_lite_slow_hash_v1}, /* UPGRADE_HEIGHT_V4 */
             {BLOCK_MAJOR_VERSION_5, Crypto::cn_turtle_lite_slow_hash_v2}, /* UPGRADE_HEIGHT_V5 */
-            /*{BLOCK_MAJOR_VERSION_6, Crypto::chukwa_slow_hash}*/ /* UPGRADE_HEIGHT_V6 */
+            {BLOCK_MAJOR_VERSION_6, Crypto::chukwa_slow_hash} /* UPGRADE_HEIGHT_V6 */
     };
 
 
