@@ -23,7 +23,7 @@ const uint32_t CRYPTONOTE_MAX_BLOCK_NUMBER                   = 500000000;
 const size_t   CRYPTONOTE_MAX_BLOCK_BLOB_SIZE                = 500000000;
 const size_t   CRYPTONOTE_MAX_TX_SIZE                        = 1000000000;
 const uint64_t CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX       = 5078;
-const uint32_t CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW          = 50;
+const uint32_t CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW          = 20;
 const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT            = 60 * 60 * 2;
 const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V3         = 3 * DIFFICULTY_TARGET;
 const uint64_t CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V4         = 6 * DIFFICULTY_TARGET;
@@ -34,12 +34,13 @@ const size_t   BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW_V3          = 11;
 // MONEY_SUPPLY - total number coins to be generated
 const uint64_t MONEY_SUPPLY                                  = UINT64_C(85000000000000);
 const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                   = 1;
-const size_t   ZAWY_DIFFICULTY_V2                            = 2;
+const size_t   ZAWY_DIFFICULTY_V2                            = 1;
 const uint8_t  ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION      = 1;
 
 const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX                 = 1;
 const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V2              = 1;
 const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V3              = 1;
+const uint64_t LWMA_3_DIFFICULTY_BLOCK_INDEX                 = 999999999;
 
 const unsigned EMISSION_SPEED_FACTOR                         = 19;
 static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED_FACTOR");
@@ -64,8 +65,10 @@ const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
 const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 6;
 
+
 const uint64_t MINIMUM_FEE                                   = UINT64_C(10);
 
+const uint32_t KEY_IMAGE_CHECKING_BLOCK_INDEX                = 0;
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
 
@@ -128,7 +131,6 @@ const uint64_t MAX_EXTRA_SIZE_V2                             = 1024;
 const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 1;
 
 
-
         const uint64_t MAX_OUTPUT_SIZE_NODE   = 250'000'000'00;
 
         const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
@@ -170,12 +172,12 @@ const size_t FUSION_TX_MAX_POOL_COUNT = 20;
 const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1 = 90;
 const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 100;
 
-const uint32_t UPGRADE_HEIGHT_V2                             = 20;
-const uint32_t UPGRADE_HEIGHT_V3                             = 30;
-const uint32_t UPGRADE_HEIGHT_V4                             = 50; // Upgrade height for CN-Lite Variant 1 switch.
-const uint32_t UPGRADE_HEIGHT_V5                             = 60; // Upgrade height for CN-T Variant 2 switch.
-const uint32_t UPGRADE_HEIGHT_V6                             = 70; // Upgrade height for Chukwa switch.
-const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V5;
+const uint32_t UPGRADE_HEIGHT_V2                             = 2;
+const uint32_t UPGRADE_HEIGHT_V3                             = 3;
+const uint32_t UPGRADE_HEIGHT_V4                             = 4; // Upgrade height for CN-Lite Variant 1 switch.
+const uint32_t UPGRADE_HEIGHT_V5                             = 5; // Upgrade height for CN-T Variant 2 switch.
+/* const uint32_t UPGRADE_HEIGHT_V6                          = 50000; // Upgrade height for Chukwa switch. */
+/*const uint32_t UPGRADE_HEIGHT_CURRENT                      = UPGRADE_HEIGHT_V6; */
 
 const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
 const uint32_t UPGRADE_VOTING_WINDOW                         = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
@@ -191,8 +193,8 @@ const uint64_t FORK_HEIGHTS[] =
     4,  // 2
     5,  // 3
     10,  // 4
-    500000, // 5
-    1000000, //9
+    100000, // 5
+    200000, //9
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
@@ -203,7 +205,6 @@ const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 /* The index in the FORK_HEIGHTS array that this version of the software will
    support. For example, if CURRENT_FORK_INDEX is 5, this version of the
    software will support the fork at 600,000 blocks.
-
    This will default to zero if the FORK_HEIGHTS array is empty, so you don't
    need to change it manually. */
 const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 5: SOFTWARE_SUPPORTED_FORK_INDEX;
@@ -221,7 +222,7 @@ const char     P2P_NET_DATA_FILENAME[]                       = "p2pstate.bin";
 const char     MINER_CONFIG_FILE_NAME[]                      = "miner_conf.json";
 } // parameters
 
-const char     CRYPTONOTE_NAME[]                             = "CpaCoin";
+const char     CRYPTONOTE_NAME[]                             = "cpacoin";
 
     const uint8_t TRANSACTION_VERSION_1 = 1;
 
@@ -234,7 +235,7 @@ const char     CRYPTONOTE_NAME[]                             = "CpaCoin";
     const uint8_t BLOCK_MAJOR_VERSION_3 = 3; /* UPGRADE_HEIGHT_V3 */
     const uint8_t BLOCK_MAJOR_VERSION_4 = 4; /* UPGRADE_HEIGHT_V4 */
     const uint8_t BLOCK_MAJOR_VERSION_5 = 5; /* UPGRADE_HEIGHT_V5 */
-    const uint8_t BLOCK_MAJOR_VERSION_6 = 6; /* UPGRADE_HEIGHT_V6 */
+  /* const uint8_t BLOCK_MAJOR_VERSION_6 = 6; */ /* UPGRADE_HEIGHT_V6 */
 
     const uint8_t BLOCK_MINOR_VERSION_0 = 0;
 
@@ -247,7 +248,7 @@ const char     CRYPTONOTE_NAME[]                             = "CpaCoin";
             {BLOCK_MAJOR_VERSION_3, Crypto::cn_slow_hash_v0}, /* UPGRADE_HEIGHT_V3 */
             {BLOCK_MAJOR_VERSION_4, Crypto::cn_lite_slow_hash_v1}, /* UPGRADE_HEIGHT_V4 */
             {BLOCK_MAJOR_VERSION_5, Crypto::cn_turtle_lite_slow_hash_v2}, /* UPGRADE_HEIGHT_V5 */
-            {BLOCK_MAJOR_VERSION_6, Crypto::chukwa_slow_hash} /* UPGRADE_HEIGHT_V6 */
+            /*{BLOCK_MAJOR_VERSION_6, Crypto::chukwa_slow_hash}*/ /* UPGRADE_HEIGHT_V6 */
     };
 
 
@@ -296,6 +297,11 @@ const char     P2P_STAT_TRUSTED_PUB_KEY[]                    = "";
     const uint64_t LEVELDB_MAX_OPEN_FILES = 128; // 128 files
     const uint64_t LEVELDB_MAX_FILE_SIZE_MB = 1024; // 1024MB = 1GB
 
+const uint64_t DATABASE_WRITE_BUFFER_MB_DEFAULT_SIZE         = 256;
+const uint64_t DATABASE_READ_BUFFER_MB_DEFAULT_SIZE          = 10;
+const uint32_t DATABASE_DEFAULT_MAX_OPEN_FILES               = 100;
+const uint16_t DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT     = 2;
+
 
 const char     LATEST_VERSION_URL[]                          = "http://latest.cryptopay.org.za";
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";
@@ -305,8 +311,10 @@ const static   boost::uuids::uuid CRYPTONOTE_NETWORK         =
 };
 
 const char* const SEED_NODES[] = {
+
 "157.245.174.176:13290", // Elephant
 "142.93.201.191:13290", // Gemsbok
 "138.68.31.205:13290" ,// Rhino}
+
 };
 } // CryptoNote
