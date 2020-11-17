@@ -45,7 +45,7 @@ const unsigned EMISSION_SPEED_FACTOR                         = 19;
 static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED_FACTOR");
 
 /* Premine amount */
-const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(50000000000000);
+const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(52000000000000);
 
 const char     GENESIS_COINBASE_TX_HEX[]   = "011401ff000180809d8cb3e90b029af3fe746ecaab21e51e5cebeb83181dd3c08c2603e76a83444737e6b951376721010eb2bd8e5d074c2deb4cf50d0f6850ffb534708d60e1c65d3ca6cb900ceeede1";
 static_assert(sizeof(GENESIS_COINBASE_TX_HEX)/sizeof(*GENESIS_COINBASE_TX_HEX) != 1, "GENESIS_COINBASE_TX_HEX must not be empty.");
@@ -175,7 +175,7 @@ const uint32_t UPGRADE_HEIGHT_V3                             = 30;
 const uint32_t UPGRADE_HEIGHT_V4                             = 50; // Upgrade height for CN-Lite Variant 1 switch.
 const uint32_t UPGRADE_HEIGHT_V5                             = 60; // Upgrade height for CN-T Variant 2 switch.
 const uint32_t UPGRADE_HEIGHT_V6                             = 70; // Upgrade height for Chukwa switch.
-const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V6;
+const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V5;
 
 const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
 const uint32_t UPGRADE_VOTING_WINDOW                         = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
