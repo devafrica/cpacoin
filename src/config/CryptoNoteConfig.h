@@ -33,13 +33,13 @@ const size_t   BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW_V3          = 11;
 
 // MONEY_SUPPLY - total number coins to be generated
 const uint64_t MONEY_SUPPLY                                  = UINT64_C(85000000000000);
-const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                   = 10;
-const size_t   ZAWY_DIFFICULTY_V2                            = 20;
-const uint8_t  ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION      = 30;
+const uint32_t ZAWY_DIFFICULTY_BLOCK_INDEX                   = 1;
+const size_t   ZAWY_DIFFICULTY_V2                            = 2;
+const uint8_t  ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION      = 1;
 
-const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX                 = 100;
-const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V2              = 110;
-const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V3              = 130;
+const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX                 = 1;
+const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V2              = 1;
+const uint64_t LWMA_2_DIFFICULTY_BLOCK_INDEX_V3              = 1;
 
 const unsigned EMISSION_SPEED_FACTOR                         = 19;
 static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED_FACTOR");
@@ -47,7 +47,7 @@ static_assert(EMISSION_SPEED_FACTOR <= 8 * sizeof(uint64_t), "Bad EMISSION_SPEED
 /* Premine amount */
 const uint64_t GENESIS_BLOCK_REWARD                          = UINT64_C(50000000000000);
 
-const char     GENESIS_COINBASE_TX_HEX[]   = "013201ff000180c0f4c198af0b02d393c988ad557b7cf8d94d7399751b3174fd62eaf9cbf8061c862bfa234958e12101422eca328fb0226976770cf10683a793046dc149a72d93e2e8f0d1a88f69715b";
+const char     GENESIS_COINBASE_TX_HEX[]   = "011401ff000180809d8cb3e90b029af3fe746ecaab21e51e5cebeb83181dd3c08c2603e76a83444737e6b951376721010eb2bd8e5d074c2deb4cf50d0f6850ffb534708d60e1c65d3ca6cb900ceeede1";
 static_assert(sizeof(GENESIS_COINBASE_TX_HEX)/sizeof(*GENESIS_COINBASE_TX_HEX) != 1, "GENESIS_COINBASE_TX_HEX must not be empty.");
 
 /* This is the unix timestamp of the first "mined" block (technically block 2, not the genesis block)
@@ -64,7 +64,7 @@ const size_t   CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE        = 600;
 
 const size_t   CRYPTONOTE_DISPLAY_DECIMAL_POINT              = 6;
 
-const uint64_t MINIMUM_FEE                                   = UINT64_C(100);
+const uint64_t MINIMUM_FEE                                   = UINT64_C(10);
 
 
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
@@ -82,19 +82,19 @@ const uint64_t MINIMUM_MIXIN_V1                              = 0;
 const uint64_t MAXIMUM_MIXIN_V1                              = 0;
 
 const uint64_t MINIMUM_MIXIN_V2                              = 1;
-const uint64_t MAXIMUM_MIXIN_V2                              = 3;
+const uint64_t MAXIMUM_MIXIN_V2                              = 12;
 
-const uint64_t MINIMUM_MIXIN_V3                              = 1;
-const uint64_t MAXIMUM_MIXIN_V3                              = 3;
+const uint64_t MINIMUM_MIXIN_V3                              = 3;
+const uint64_t MAXIMUM_MIXIN_V3                              = 50;
 
 /* The heights to activate the mixin limits at */
-const uint32_t MIXIN_LIMITS_V1_HEIGHT                        = 1;
-const uint32_t MIXIN_LIMITS_V2_HEIGHT                        = 20;
-const uint32_t MIXIN_LIMITS_V3_HEIGHT                        = 50;
+const uint32_t MIXIN_LIMITS_V1_HEIGHT                        = 0;
+const uint32_t MIXIN_LIMITS_V2_HEIGHT                        = 10000;
+const uint32_t MIXIN_LIMITS_V3_HEIGHT                        = 50000;
 
 /* The mixin to use by default with cpawallet and cpa-service */
 /* DEFAULT_MIXIN_V0 is the mixin used before MIXIN_LIMITS_V1_HEIGHT is started */
-const uint64_t DEFAULT_MIXIN_V0                              = 3;
+const uint64_t DEFAULT_MIXIN_V0                              = 0;
 const uint64_t DEFAULT_MIXIN_V1                              = MAXIMUM_MIXIN_V1;
 const uint64_t DEFAULT_MIXIN_V2                              = MAXIMUM_MIXIN_V2;
 const uint64_t DEFAULT_MIXIN_V3                              = MAXIMUM_MIXIN_V3;
@@ -103,7 +103,7 @@ const uint64_t DEFAULT_DUST_THRESHOLD                        = UINT64_C(10);
 const uint64_t DEFAULT_DUST_THRESHOLD_V2                     = UINT64_C(0);
 
 const uint32_t DUST_THRESHOLD_V2_HEIGHT                      = MIXIN_LIMITS_V2_HEIGHT;
-const uint32_t FUSION_DUST_THRESHOLD_HEIGHT_V2               = 20;
+const uint32_t FUSION_DUST_THRESHOLD_HEIGHT_V2               = 10000;
 const uint64_t EXPECTED_NUMBER_OF_BLOCKS_PER_DAY             = 24 * 60 * 60 / DIFFICULTY_TARGET;
 
 const size_t   DIFFICULTY_WINDOW                             = 17;
@@ -125,7 +125,7 @@ const uint64_t MAX_BLOCK_SIZE_GROWTH_SPEED_NUMERATOR         = 100 * 1024;
 const uint64_t MAX_BLOCK_SIZE_GROWTH_SPEED_DENOMINATOR       = 365 * 24 * 60 * 60 / DIFFICULTY_TARGET;
 const uint64_t MAX_EXTRA_SIZE                                = 140000;
 const uint64_t MAX_EXTRA_SIZE_V2                             = 1024;
-const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
+const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 1;
 
 
 
@@ -133,20 +133,20 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 500;
 
         const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 30000;
+        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 1;
 
 
 /* For new projects forked from this code base, the values immediately below
    should be changed to 0 to prevent issues with transaction processing
    and other possible unexpected behavior */
-const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 15;
-const uint64_t BLOCK_BLOB_SHUFFLE_CHECK_HEIGHT               = 16;
-const uint64_t TRANSACTION_INPUT_BLOCKTIME_VALIDATION_HEIGHT = 17;
+const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 0;
+const uint64_t BLOCK_BLOB_SHUFFLE_CHECK_HEIGHT               = 0;
+const uint64_t TRANSACTION_INPUT_BLOCKTIME_VALIDATION_HEIGHT = 0;
 
 /* Coinbase transactions must include the recipient address + tx priv
  * key in tx_extra to verify the outputs go to that address after this
  * height. */
-const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 2'800'000;
+const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 1;
 
 /* This describes how many blocks of "wiggle" room transactions have regarding
    when the outputs can be spent based on a reasonable belief that the outputs
@@ -168,7 +168,7 @@ const size_t   FUSION_TX_MIN_IN_OUT_COUNT_RATIO              = 4;
    to help curtail fusion transaction spam. */
 const size_t FUSION_TX_MAX_POOL_COUNT = 20;
 const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1 = 90;
-const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 20000;
+const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 100;
 
 const uint32_t UPGRADE_HEIGHT_V2                             = 20;
 const uint32_t UPGRADE_HEIGHT_V3                             = 30;
@@ -186,30 +186,27 @@ static_assert(UPGRADE_VOTING_WINDOW > 1, "Bad UPGRADE_VOTING_WINDOW");
 /* Block heights we are going to have hard forks at */
 const uint64_t FORK_HEIGHTS[] =
 {
-    20,  // 0
-    30,  // 1
-    50,  // 2
-    60,  // 3
-    70,  // 4
-    80,  // 5
-    100, // 6
-    120, // 7
-    20000, // 8
-    100000, //9
+    2,  // 0
+    3,  // 1
+    4,  // 2
+    5,  // 3
+    10,  // 4
+    500000, // 5
+    1000000, //9
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
-const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 8;
+const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 5;
 
 const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
 /* The index in the FORK_HEIGHTS array that this version of the software will
-   support. For example, if CURRENT_FORK_INDEX is 4, this version of the
+   support. For example, if CURRENT_FORK_INDEX is 5, this version of the
    software will support the fork at 600,000 blocks.
 
    This will default to zero if the FORK_HEIGHTS array is empty, so you don't
    need to change it manually. */
-const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 8: SOFTWARE_SUPPORTED_FORK_INDEX;
+const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 5: SOFTWARE_SUPPORTED_FORK_INDEX;
 
  /* Make sure CURRENT_FORK_INDEX is a valid index, unless FORK_HEIGHTS is empty */
  static_assert(
@@ -258,9 +255,9 @@ const size_t   BLOCKS_IDS_SYNCHRONIZING_DEFAULT_COUNT        =  10000;  //by def
 const uint64_t BLOCKS_SYNCHRONIZING_DEFAULT_COUNT            =  100;    //by default, blocks count in blocks downloading
 const size_t   COMMAND_RPC_GET_BLOCKS_FAST_MAX_COUNT         =  1000;
 
-const int      P2P_DEFAULT_PORT                              =  13280;
-const int      RPC_DEFAULT_PORT                              =  13281;
-const int      SERVICE_DEFAULT_PORT                          =  13282;
+const int      P2P_DEFAULT_PORT                              =  13290;
+const int      RPC_DEFAULT_PORT                              =  13291;
+const int      SERVICE_DEFAULT_PORT                          =  13292;
 
 const size_t   P2P_LOCAL_WHITE_PEERLIST_LIMIT                =  1000;
 const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
@@ -304,11 +301,12 @@ const char     LATEST_VERSION_URL[]                          = "http://latest.cr
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";
 const static   boost::uuids::uuid CRYPTONOTE_NETWORK         =
 {
-    {  0xb5, 0x0c, 0x4a, 0x6c, 0xcf, 0x52, 0x57, 0x51, 0x65, 0xb9, 0x91, 0xb4, 0xb6, 0xc1, 0x53, 0xe9  }
+    {  0xb5, 0x0c, 0x4a, 0x6c, 0xcf, 0x72, 0x57, 0x51, 0x65, 0xb9, 0x91, 0xb3, 0xb6, 0xc1, 0x53, 0xe9  }
 };
 
 const char* const SEED_NODES[] = {
-"159.65.101.166:13280", // Elephant
-"142.93.201.191:13280" // Rhino};
+"157.245.174.176:13290", // Elephant
+"142.93.201.191:13290", // Gemsbok
+"138.68.31.205:13290" ,// Rhino}
 };
 } // CryptoNote
