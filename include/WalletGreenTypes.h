@@ -11,7 +11,6 @@
 #include <limits>
 #include <string>
 #include <vector>
-#include "WalletTypes.h"
 
 namespace CryptoNote
 {
@@ -116,7 +115,7 @@ namespace CryptoNote
     {
         std::vector<std::string> sourceAddresses;
         std::vector<WalletOrder> destinations;
-        WalletTypes::FeeType fee = WalletTypes::FeeType::MinimumFee();
+        uint64_t fee = 0;
         uint16_t mixIn = 0;
         std::string extra;
         uint64_t unlockTimestamp = 0;

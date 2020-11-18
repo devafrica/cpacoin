@@ -135,7 +135,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 1;
 
         const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 1;
+        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 250000;
 
 
 /* For new projects forked from this code base, the values immediately below
@@ -176,15 +176,20 @@ const uint32_t UPGRADE_HEIGHT_V2                             = 2;
 const uint32_t UPGRADE_HEIGHT_V3                             = 3;
 const uint32_t UPGRADE_HEIGHT_V4                             = 4; // Upgrade height for CN-Lite Variant 1 switch.
 const uint32_t UPGRADE_HEIGHT_V5                             = 5; // Upgrade height for CN-T Variant 2 switch.
-const uint32_t UPGRADE_HEIGHT_V6                             = 500000; // Upgrade height for Chukwa switch.
+const uint32_t UPGRADE_HEIGHT_V6                             = 1000000; // Upgrade height for Chukwa switch. 
 const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V5;
 
-const unsigned UPGRADE_VOTING_THRESHOLD                      = 90;               // percent
-const uint32_t UPGRADE_VOTING_WINDOW                         = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
-const uint32_t UPGRADE_WINDOW                                = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY;  // blocks
-static_assert(0 < UPGRADE_VOTING_THRESHOLD && UPGRADE_VOTING_THRESHOLD <= 100, "Bad UPGRADE_VOTING_THRESHOLD");
-static_assert(UPGRADE_VOTING_WINDOW > 1, "Bad UPGRADE_VOTING_WINDOW");
+        /* This value is here to handle the difficult reset needed for the PoW upgrade
+           at block major version V6 */
+        const uint64_t DIFFICULTY_RESET_HEIGHT_V1 = UPGRADE_HEIGHT_V6;
+        const float DIFFICULTY_RESET_MULTIPLIER_V1 = 0.1;
+        const uint64_t DIFFICULTY_RESET_WINDOW_V1 = DIFFICULTY_BLOCKS_COUNT_V3;
 
+        const unsigned UPGRADE_VOTING_THRESHOLD = 90; // percent
+        const uint32_t UPGRADE_VOTING_WINDOW = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY; // blocks
+        const uint32_t UPGRADE_WINDOW = EXPECTED_NUMBER_OF_BLOCKS_PER_DAY; // blocks
+        static_assert(0 < UPGRADE_VOTING_THRESHOLD && UPGRADE_VOTING_THRESHOLD <= 100, "Bad UPGRADE_VOTING_THRESHOLD");
+        static_assert(UPGRADE_VOTING_WINDOW > 1, "Bad UPGRADE_VOTING_WINDOW");
 /* Block heights we are going to have hard forks at */
 const uint64_t FORK_HEIGHTS[] =
 {
@@ -193,12 +198,17 @@ const uint64_t FORK_HEIGHTS[] =
     4,  // 2
     5,  // 3
     10,  // 4
-    100000, // 5
-    500000, //9
+    800,  // 5
+    1000, // 6
+    5000, // 7
+    10000, // 8
+    300000, //9
+    1000000, //10
+    
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
-const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 5;
+const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 9;
 
 const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
@@ -207,7 +217,7 @@ const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
    software will support the fork at 600,000 blocks.
    This will default to zero if the FORK_HEIGHTS array is empty, so you don't
    need to change it manually. */
-const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 5: SOFTWARE_SUPPORTED_FORK_INDEX;
+const uint8_t CURRENT_FORK_INDEX = FORK_HEIGHTS_SIZE == 0 ? 0: SOFTWARE_SUPPORTED_FORK_INDEX;
 
  /* Make sure CURRENT_FORK_INDEX is a valid index, unless FORK_HEIGHTS is empty */
  static_assert(
@@ -235,7 +245,7 @@ const char     CRYPTONOTE_NAME[]                             = "cpacoin";
     const uint8_t BLOCK_MAJOR_VERSION_3 = 3; /* UPGRADE_HEIGHT_V3 */
     const uint8_t BLOCK_MAJOR_VERSION_4 = 4; /* UPGRADE_HEIGHT_V4 */
     const uint8_t BLOCK_MAJOR_VERSION_5 = 5; /* UPGRADE_HEIGHT_V5 */
-    const uint8_t BLOCK_MAJOR_VERSION_6 = 6; /* UPGRADE_HEIGHT_V6 */
+   const uint8_t BLOCK_MAJOR_VERSION_6 = 6;  /* UPGRADE_HEIGHT_V6 */
 
     const uint8_t BLOCK_MINOR_VERSION_0 = 0;
 
@@ -263,45 +273,38 @@ const int      SERVICE_DEFAULT_PORT                          =  13292;
 const size_t   P2P_LOCAL_WHITE_PEERLIST_LIMIT                =  1000;
 const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
 
-// P2P Network Configuration Section - This defines our current P2P network version
-// and the minimum version for communication between nodes
-const uint8_t  P2P_CURRENT_VERSION                           = 11;
-const uint8_t  P2P_MINIMUM_VERSION                           = 10;
+  // P2P Network Configuration Section - This defines our current P2P network version
+    // and the minimum version for communication between nodes
+    const uint8_t P2P_CURRENT_VERSION = 11;
 
-// This defines the minimum P2P version required for lite blocks propogation
-const uint8_t P2P_LITE_BLOCKS_PROPOGATION_VERSION            = 4;
+    const uint8_t P2P_MINIMUM_VERSION = 10;
 
-// This defines the number of versions ahead we must see peers before we start displaying
-// warning messages that we need to upgrade our software.
-const uint8_t  P2P_UPGRADE_WINDOW                            = 2;
+    // This defines the minimum P2P version required for lite blocks propogation
+    const uint8_t P2P_LITE_BLOCKS_PROPOGATION_VERSION = 4;
 
-const size_t   P2P_CONNECTION_MAX_WRITE_BUFFER_SIZE          = 32 * 1024 * 1024; // 32 MB
-const uint32_t P2P_DEFAULT_CONNECTIONS_COUNT                 = 8;
-const size_t   P2P_DEFAULT_WHITELIST_CONNECTIONS_PERCENT     = 70;
-const uint32_t P2P_DEFAULT_HANDSHAKE_INTERVAL                = 60;            // seconds
-const uint32_t P2P_DEFAULT_PACKET_MAX_SIZE                   = 50000000;      // 50000000 bytes maximum packet size
-const uint32_t P2P_DEFAULT_PEERS_IN_HANDSHAKE                = 250;
-const uint32_t P2P_DEFAULT_CONNECTION_TIMEOUT                = 5000;          // 5 seconds
-const uint32_t P2P_DEFAULT_PING_CONNECTION_TIMEOUT           = 2000;          // 2 seconds
-const uint64_t P2P_DEFAULT_INVOKE_TIMEOUT                    = 60 * 2 * 1000; // 2 minutes
-const size_t   P2P_DEFAULT_HANDSHAKE_INVOKE_TIMEOUT          = 5000;          // 5 seconds
-const char     P2P_STAT_TRUSTED_PUB_KEY[]                    = "";
+    // This defines the number of versions ahead we must see peers before we start displaying
+    // warning messages that we need to upgrade our software.
+    const uint8_t P2P_UPGRADE_WINDOW = 2;
 
-    const uint64_t ROCKSDB_WRITE_BUFFER_MB = 256; // 256 MB
-    const uint64_t ROCKSDB_READ_BUFFER_MB = 128; // 128 MB
-    const uint64_t ROCKSDB_MAX_OPEN_FILES = 125; // 125 files
-    const uint64_t ROCKSDB_BACKGROUND_THREADS = 4; // 4 DB threads
+    const size_t P2P_CONNECTION_MAX_WRITE_BUFFER_SIZE = 32 * 1024 * 1024; // 32 MB
+    const uint32_t P2P_DEFAULT_CONNECTIONS_COUNT = 8;
 
-    const uint64_t LEVELDB_WRITE_BUFFER_MB = 64; // 64 MB
-    const uint64_t LEVELDB_READ_BUFFER_MB = 64; // 64 MB
-    const uint64_t LEVELDB_MAX_OPEN_FILES = 128; // 128 files
-    const uint64_t LEVELDB_MAX_FILE_SIZE_MB = 1024; // 1024MB = 1GB
+    const size_t P2P_DEFAULT_WHITELIST_CONNECTIONS_PERCENT = 70;
 
-const uint64_t DATABASE_WRITE_BUFFER_MB_DEFAULT_SIZE         = 256;
-const uint64_t DATABASE_READ_BUFFER_MB_DEFAULT_SIZE          = 10;
-const uint32_t DATABASE_DEFAULT_MAX_OPEN_FILES               = 100;
-const uint16_t DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT     = 2;
+    const uint32_t P2P_DEFAULT_HANDSHAKE_INTERVAL = 60; // seconds
+    const uint32_t P2P_DEFAULT_PACKET_MAX_SIZE = 50000000; // 50000000 bytes maximum packet size
+    const uint32_t P2P_DEFAULT_PEERS_IN_HANDSHAKE = 250;
 
+    const uint32_t P2P_DEFAULT_CONNECTION_TIMEOUT = 5000; // 5 seconds
+    const uint32_t P2P_DEFAULT_PING_CONNECTION_TIMEOUT = 2000; // 2 seconds
+    const uint64_t P2P_DEFAULT_INVOKE_TIMEOUT = 60 * 2 * 1000; // 2 minutes
+    const size_t P2P_DEFAULT_HANDSHAKE_INVOKE_TIMEOUT = 5000; // 5 seconds
+    const char P2P_STAT_TRUSTED_PUB_KEY[] = "";
+
+    const uint64_t DATABASE_WRITE_BUFFER_MB_DEFAULT_SIZE = 1024; // 1 GB
+    const uint64_t DATABASE_READ_BUFFER_MB_DEFAULT_SIZE = 1024; // 1 GB
+    const uint32_t DATABASE_DEFAULT_MAX_OPEN_FILES = 500; // 500 files
+    const uint16_t DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT = 10; // 10 DB threads
 
 const char     LATEST_VERSION_URL[]                          = "http://latest.cryptopay.org.za";
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";

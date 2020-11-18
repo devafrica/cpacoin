@@ -36,8 +36,7 @@ class SubWallet
         const std::string address,
         const uint64_t scanHeight,
         const uint64_t scanTimestamp,
-        const bool isPrimaryAddress,
-        const uint64_t walletIndex = 0);
+        const bool isPrimaryAddress);
 
     /////////////////////////////
     /* Public member functions */
@@ -51,7 +50,7 @@ class SubWallet
 
     /* Generates a key image from the derivation, and stores the
        transaction input along with the key image filled in */
-    std::tuple<Crypto::KeyImage, Crypto::SecretKey> getTxInputKeyImage(
+    Crypto::KeyImage getTxInputKeyImage(
         const Crypto::KeyDerivation derivation,
         const size_t outputIndex,
         const bool isViewWallet) const;
@@ -67,8 +66,6 @@ class SubWallet
 
     std::string address() const;
 
-    uint64_t walletIndex() const;
-
     Crypto::PublicKey publicSpendKey() const;
 
     Crypto::SecretKey privateSpendKey() const;
@@ -80,10 +77,6 @@ class SubWallet
     std::vector<Crypto::KeyImage> removeForkedInputs(const uint64_t forkHeight, const bool isViewWallet);
 
     void removeCancelledTransactions(const std::unordered_set<Crypto::Hash> cancelledTransactions);
-    
-    bool haveSpendableInput(
-        const WalletTypes::TransactionInput &input,
-        const uint64_t height) const;
 
     /* Gets inputs that are spendable at the given height */
     std::vector<WalletTypes::TxInputAndOwner> getSpendableInputs(const uint64_t height) const;
@@ -126,9 +119,6 @@ class SubWallet
 
     /* The subwallet's private spend key */
     Crypto::SecretKey m_privateSpendKey;
-
-    /* The subwallet's deterministic index value */
-    uint64_t m_walletIndex = 0;
 
     /* The timestamp to begin syncing the wallet at
        (usually creation time or zero) */

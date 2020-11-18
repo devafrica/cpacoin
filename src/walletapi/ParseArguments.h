@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <optional>
-
 #include <config/CryptoNoteConfig.h>
 #include <logger/Logger.h>
 
@@ -26,9 +24,6 @@ struct ApiConfig
 
     /* Controls what level of messages to log */
     Logger::LogLevel logLevel = Logger::DISABLED;
-
-    /* Optionally log to a file */
-    std::optional<std::string> loggingFilePath;
 
     /* Controls whether an interactive console is provided */
     bool noConsole = false;

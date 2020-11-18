@@ -13,14 +13,12 @@ namespace Logger
 {
     enum LogLevel
     {
-        TRACE = 5,
         DEBUG = 4,
         INFO = 3,
         WARNING = 2,
         FATAL = 1,
         DISABLED = 0,
     };
-
     enum LogCategory
     {
         SYNC,
@@ -28,8 +26,6 @@ namespace Logger
         FILESYSTEM,
         SAVE,
         DAEMON,
-        DAEMON_RPC,
-        DATABASE,
     };
 
     std::string logLevelToString(const LogLevel level);

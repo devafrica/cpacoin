@@ -8,7 +8,6 @@
 
 #include <CryptoNote.h>
 #include <boost/optional.hpp>
-#include <optional>
 
 namespace CryptoNote
 {
@@ -31,20 +30,16 @@ namespace CryptoNote
 
         uint64_t getTransactionFee() const;
 
-        uint64_t getTransactionAmount() const;
-
       private:
         Transaction transaction;
 
-        mutable std::optional<BinaryArray> transactionBinaryArray;
+        mutable boost::optional<BinaryArray> transactionBinaryArray;
 
-        mutable std::optional<Crypto::Hash> transactionHash;
+        mutable boost::optional<Crypto::Hash> transactionHash;
 
-        mutable std::optional<Crypto::Hash> transactionPrefixHash;
+        mutable boost::optional<Crypto::Hash> transactionPrefixHash;
 
-        mutable std::optional<uint64_t> transactionFee;
-
-        mutable std::optional<uint64_t> transactionAmount;
+        mutable boost::optional<uint64_t> transactionFee;
     };
 
 } // namespace CryptoNote

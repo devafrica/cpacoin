@@ -1,5 +1,6 @@
 // Copyright (c) 2018, The TurtleCoin Developers
-//
+// Copyright (c) 2020, The CryptoPayAfrica Developers
+// 
 // Please see the included LICENSE file for more information.
 
 #pragma once
@@ -26,7 +27,7 @@ namespace WalletConfig
     const std::string daemonName = "cpacoind";
 
     /* The name to call this wallet */
-    const std::string walletName = "cpawallet";
+    const std::string walletName = "zedwallet";
 
     /* The name of service/walletd, the programmatic rpc interface to a
        wallet */
@@ -38,13 +39,16 @@ namespace WalletConfig
     /* Where can your users contact you for support? E.g. discord */
     const std::string contactLink = "https://discord.gg/HmTCVbS";
 
+
     /* The number of decimals your coin has */
-    const uint8_t numDecimalPlaces = CryptoNote::parameters::CRYPTONOTE_DISPLAY_DECIMAL_POINT;
+    const uint8_t numDecimalPlaces = CryptoNote::parameters
+                                               ::CRYPTONOTE_DISPLAY_DECIMAL_POINT;
+
 
     /* The length of a standard address for your coin */
     const uint16_t standardAddressLength = 97;
 
-    /* The length of an integrated address for your coin - It's the same as
+     /* The length of an integrated address for your coin - It's the same as
        a normal address, but there is a paymentID included in there - since
        payment ID's are 64 chars, and base58 encoding is done by encoding
        chunks of 8 chars at once into blocks of 11 chars, we can calculate
@@ -58,10 +62,10 @@ namespace WalletConfig
     const uint64_t minimumFee = CryptoNote::parameters::MINIMUM_FEE;
 
     /* The minimum amount allowed to be sent - usually 1 (in ATOMIC units!) */
-    const uint64_t minimumSend = 10000;
+    const uint64_t minimumSend = 1;
 
     /* Is a mixin of zero disabled on your network? */
-    const bool mixinZeroDisabled = false;
+    const bool mixinZeroDisabled = true;
 
     /* If a mixin of zero is disabled, at what height was it disabled? E.g.
        fork height, or 0, if never allowed. This is ignored if a mixin of

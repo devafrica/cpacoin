@@ -47,11 +47,6 @@ namespace CryptoNote
         }
     }
 
-    void HttpRequest::setMethod(const std::string &value)
-    {
-        method = value;
-    }
-
     void HttpRequest::setUrl(const std::string &u)
     {
         url = u;
@@ -59,7 +54,7 @@ namespace CryptoNote
 
     std::ostream &HttpRequest::printHttpRequest(std::ostream &os) const
     {
-        os << method << " " << url << " HTTP/1.1\r\n";
+        os << "POST " << url << " HTTP/1.1\r\n";
         auto host = headers.find("Host");
         if (host == headers.end())
         {

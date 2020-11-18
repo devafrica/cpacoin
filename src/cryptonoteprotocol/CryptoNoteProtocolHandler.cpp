@@ -55,7 +55,7 @@ namespace CryptoNote
 
             for (const auto &rawBlock : rawBlocks)
             {
-                legacy.emplace_back(rawBlock.block, rawBlock.transactions);
+                legacy.emplace_back(RawBlockLegacy {rawBlock.block, rawBlock.transactions});
             }
 
             return legacy;
@@ -353,7 +353,7 @@ namespace CryptoNote
                 ss << "You are " << std::abs(diff) << " blocks (" << days << " days) ahead ";
             }
 
-            ss << "the current peer you're connected to. Hello Africa tell me how you doing! ";
+            ss << "the current peer you're connected to. Africa`s Preferred Currency! ";
 
             auto logLevel = Logging::TRACE;
             /* Log at different levels depending upon if we're ahead, behind, and if it's

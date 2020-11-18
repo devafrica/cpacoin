@@ -19,7 +19,7 @@
 #include <serialization/BinaryOutputStreamSerializer.h>
 #include <serialization/CryptoNoteSerialization.h>
 #include <vector>
-#include <ZedwalletTypes.h>
+#include <zedwallet/Types.h>
 
 namespace Common
 {

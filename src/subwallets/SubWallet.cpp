@@ -39,15 +39,13 @@ SubWallet::SubWallet(
     const std::string address,
     const uint64_t scanHeight,
     const uint64_t scanTimestamp,
-    const bool isPrimaryAddress,
-    const uint64_t walletIndex):
+    const bool isPrimaryAddress):
     m_publicSpendKey(publicSpendKey),
     m_address(address),
     m_syncStartHeight(scanHeight),
     m_syncStartTimestamp(scanTimestamp),
     m_privateSpendKey(privateSpendKey),
-    m_isPrimaryAddress(isPrimaryAddress),
-    m_walletIndex(walletIndex)
+    m_isPrimaryAddress(isPrimaryAddress)
 {
 }
 
@@ -55,7 +53,7 @@ SubWallet::SubWallet(
 /* CLASS FUNCTIONS */
 /////////////////////
 
-std::tuple<Crypto::KeyImage, Crypto::SecretKey> SubWallet::getTxInputKeyImage(
+Crypto::KeyImage SubWallet::getTxInputKeyImage(
     const Crypto::KeyDerivation derivation,
     const size_t outputIndex,
     const bool isViewWallet) const
@@ -79,11 +77,9 @@ std::tuple<Crypto::KeyImage, Crypto::SecretKey> SubWallet::getTxInputKeyImage(
 
         /* Get the key image from the tmp public and private key */
         Crypto::generate_key_image(tmp.publicKey, tmp.secretKey, keyImage);
-
-        return { keyImage, tmp.secretKey };
+        return keyImage;
     }
-
-    return { Crypto::KeyImage(), Crypto::SecretKey() };
+    return Crypto::KeyImage();
 }
 
 void SubWallet::storeTransactionInput(const WalletTypes::TransactionInput input, const bool isViewWallet)
@@ -104,36 +100,14 @@ void SubWallet::storeTransactionInput(const WalletTypes::TransactionInput input,
             m_unconfirmedIncomingAmounts.erase(it, m_unconfirmedIncomingAmounts.end());
         }
     }
-
-    auto it = std::find_if(m_unspentInputs.begin(), m_unspentInputs.end(), [&input](const auto x) {
-        return x.key == input.key;
-    });
-
-    /* Ensure we don't add the input twice */
-    if (it == m_unspentInputs.end())
-    {
-        m_unspentInputs.push_back(input);
-    }
-    else
-    {
-        std::stringstream stream;
-
-        stream << "Input with key " << input.key
-               << " being stored is already present in unspent inputs vector.";
-
-        Logger::logger.log(
-            stream.str(),
-            Logger::WARNING,
-            { Logger::SYNC }
-        );
-    }
+    m_unspentInputs.push_back(input);
 }
 
 std::tuple<uint64_t, uint64_t> SubWallet::getBalance(const uint64_t currentHeight) const
 {
     uint64_t unlockedBalance = 0;
     uint64_t lockedBalance = 0;
-    for (const auto &input : m_unspentInputs)
+    for (const auto input : m_unspentInputs)
     {
         /* If an unlock height is present, check if the input is unlocked */
         if (Utilities::isInputUnlocked(input.unlockTime, currentHeight))
@@ -147,7 +121,7 @@ std::tuple<uint64_t, uint64_t> SubWallet::getBalance(const uint64_t currentHeigh
     }
 
     /* Add the locked balance from incoming transactions */
-    for (const auto &unconfirmedInput : m_unconfirmedIncomingAmounts)
+    for (const auto unconfirmedInput : m_unconfirmedIncomingAmounts)
     {
         lockedBalance += unconfirmedInput.amount;
     }
@@ -174,11 +148,6 @@ std::string SubWallet::address() const
     return m_address;
 }
 
-uint64_t SubWallet::walletIndex() const
-{
-    return m_walletIndex;
-}
-
 Crypto::PublicKey SubWallet::publicSpendKey() const
 {
     return m_publicSpendKey;
@@ -192,40 +161,15 @@ Crypto::SecretKey SubWallet::privateSpendKey() const
 void SubWallet::markInputAsSpent(const Crypto::KeyImage keyImage, const uint64_t spendHeight)
 {
     /* Find the input */
-    auto it = std::find_if(m_unspentInputs.begin(), m_unspentInputs.end(), [&keyImage](const auto x) {
-        return x.keyImage == keyImage;
-    });
-
-    bool inSpent = std::find_if(m_spentInputs.begin(), m_spentInputs.end(), [&keyImage](const auto x) {
-        return x.keyImage == keyImage;
-    }) != m_spentInputs.end();
-
-    if (inSpent)
-    {
-        std::stringstream stream;
-
-        stream << "Input with key image " << keyImage
-               << " being marked as spent is already present in spent inputs vector.";
-
-        Logger::logger.log(
-            stream.str(),
-            Logger::WARNING,
-            { Logger::SYNC }
-        );
-    }
-
+    auto it = std::find_if(
+        m_unspentInputs.begin(), m_unspentInputs.end(), [&keyImage](const auto x) { return x.keyImage == keyImage; });
     if (it != m_unspentInputs.end())
     {
         /* Set the spend height */
         it->spendHeight = spendHeight;
 
-
-        /* Ensure we don't add the input twice */
-        if (!inSpent)
-        {
-            /* Add to the spent inputs vector */
-            m_spentInputs.push_back(*it);
-        }
+        /* Add to the spent inputs vector */
+        m_spentInputs.push_back(*it);
 
         /* Remove from the unspent vector */
         m_unspentInputs.erase(it);
@@ -241,11 +185,8 @@ void SubWallet::markInputAsSpent(const Crypto::KeyImage keyImage, const uint64_t
         /* Set the spend height */
         it->spendHeight = spendHeight;
 
-        if (!inSpent)
-        {
-            /* Add to the spent inputs vector */
-            m_spentInputs.push_back(*it);
-        }
+        /* Add to the spent inputs vector */
+        m_spentInputs.push_back(*it);
 
         /* Remove from the locked vector */
         m_lockedInputs.erase(it);
@@ -286,28 +227,8 @@ void SubWallet::markInputAsLocked(const Crypto::KeyImage keyImage)
         return;
     }
 
-    bool inLocked = std::find_if(m_lockedInputs.begin(), m_lockedInputs.end(), [&keyImage](const auto x) {
-        return x.keyImage == keyImage;
-    }) != m_lockedInputs.end();
-
-    if (!inLocked)
-    {
-        /* Add to the locked inputs vector */
-        m_lockedInputs.push_back(*it);
-    }
-    else
-    {
-        std::stringstream stream;
-
-        stream << "Input with key image " << keyImage
-               << " being marked as locked is already present in locked inputs vector.";
-
-        Logger::logger.log(
-            stream.str(),
-            Logger::WARNING,
-            { Logger::SYNC }
-        );
-    }
+    /* Add to the spent inputs vector */
+    m_lockedInputs.push_back(*it);
 
     /* Remove from the unspent vector */
     m_unspentInputs.erase(it);
@@ -354,28 +275,8 @@ std::vector<Crypto::KeyImage> SubWallet::removeForkedInputs(const uint64_t forkH
             /* Reset spend height */
             input.spendHeight = 0;
 
-            bool inUnspent = std::find_if(m_unspentInputs.begin(), m_unspentInputs.end(), [&input](const auto x) {
-                return x.key == input.key;
-            }) != m_unspentInputs.end();
-
-            if (!inUnspent)
-            {
-                /* Readd to the unspent vector */
-                m_unspentInputs.push_back(input);
-            }
-            else
-            {
-                std::stringstream stream;
-
-                stream << "Input with key " << input.key
-                       << " being marked as unspent is already present in unspent inputs vector.";
-
-                Logger::logger.log(
-                    stream.str(),
-                    Logger::WARNING,
-                    { Logger::SYNC }
-                );
-            }
+            /* Readd to the unspent vector */
+            m_unspentInputs.push_back(input);
 
             return true;
         }
@@ -434,28 +335,10 @@ void SubWallet::removeCancelledTransactions(const std::unordered_set<Crypto::Has
     }
 }
 
-bool SubWallet::haveSpendableInput(
-    const WalletTypes::TransactionInput& input,
-    const uint64_t height) const
-{
-    for (const auto &i : m_unspentInputs)
-    {
-        /* Checking for .key to support view wallets */
-        if (input.keyImage == i.keyImage || input.key == i.key)
-        {
-            /* Only gonna be one input that matches so can early return false
-             * if the input is locked */
-            return Utilities::isInputUnlocked(i.unlockTime, height);
-        }
-    }
-
-    return false;
-}
-
 std::vector<WalletTypes::TxInputAndOwner> SubWallet::getSpendableInputs(const uint64_t height) const
 {
     std::vector<WalletTypes::TxInputAndOwner> inputs;
-    for (const auto &input : m_unspentInputs)
+    for (const auto input : m_unspentInputs)
     {
         if (Utilities::isInputUnlocked(input.unlockTime, height))
         {
@@ -535,11 +418,6 @@ std::vector<Crypto::KeyImage> SubWallet::getKeyImages() const
 
 void SubWallet::fromJSON(const JSONValue &j)
 {
-    if (j.HasMember("walletIndex"))
-    {
-        m_walletIndex = getUint64FromJSON(j, "walletIndex");
-    }
-
     m_publicSpendKey.fromString(getStringFromJSON(j, "publicSpendKey"));
     m_privateSpendKey.fromString(getStringFromJSON(j, "privateSpendKey"));
     m_address = getStringFromJSON(j, "address");
@@ -575,8 +453,6 @@ void SubWallet::fromJSON(const JSONValue &j)
 void SubWallet::toJSON(rapidjson::Writer<rapidjson::StringBuffer> &writer) const
 {
     writer.StartObject();
-    writer.Key("walletIndex");
-    writer.Uint64(m_walletIndex);
     writer.Key("publicSpendKey");
     m_publicSpendKey.toJSON(writer);
     writer.Key("privateSpendKey");

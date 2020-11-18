@@ -230,8 +230,7 @@ namespace CryptoNote
         uint64_t alreadyGeneratedCoins,
         size_t currentBlockSize,
         uint64_t fee,
-        const Crypto::PublicKey &publicViewKey,
-        const Crypto::PublicKey &publicSpendKey,
+        const AccountPublicAddress &minerAddress,
         Transaction &tx,
         const BinaryArray &extraNonce /* = BinaryArray()*/,
         size_t maxOuts /* = 1*/) const
@@ -240,26 +239,11 @@ namespace CryptoNote
         tx.outputs.clear();
         tx.extra.clear();
 
-        /**
-         * To avoid weird parsing errors in the TX_EXTRA bytes, it's far safer to make sure
-         * that we always add the fields in ORDER of the their TAG number
-         */
-
         KeyPair txkey = generateKeyPair();
-        addTransactionPublicKeyToExtra(tx.extra, txkey.publicKey); // TAG 0x01
-
-        tx.extra.push_back(Constants::TX_EXTRA_RECIPIENT_PUBLIC_VIEW_KEY_IDENTIFIER); // TAG 0x04
-        std::copy(std::begin(publicViewKey.data), std::end(publicViewKey.data), std::back_inserter(tx.extra));
-
-        tx.extra.push_back(Constants::TX_EXTRA_RECIPIENT_PUBLIC_SPEND_KEY_IDENTIFIER); // TAG 0x05
-        std::copy(std::begin(publicSpendKey.data), std::end(publicSpendKey.data), std::back_inserter(tx.extra));
-
-        tx.extra.push_back(Constants::TX_EXTRA_TRANSACTION_PRIVATE_KEY_IDENTIFIER); // TAG 0x06
-        std::copy(std::begin(txkey.secretKey.data), std::end(txkey.secretKey.data), std::back_inserter(tx.extra));
-
+        addTransactionPublicKeyToExtra(tx.extra, txkey.publicKey);
         if (!extraNonce.empty())
         {
-            if (!addPoolNonceToTransactionExtra(tx.extra, extraNonce)) // TAG 0x07
+            if (!addExtraNonceToTransactionExtra(tx.extra, extraNonce))
             {
                 return false;
             }
@@ -307,21 +291,21 @@ namespace CryptoNote
             Crypto::KeyDerivation derivation;
             Crypto::PublicKey outEphemeralPubKey;
 
-            bool r = Crypto::generate_key_derivation(publicViewKey, txkey.secretKey, derivation);
+            bool r = Crypto::generate_key_derivation(minerAddress.viewPublicKey, txkey.secretKey, derivation);
 
             if (!(r))
             {
                 logger(ERROR, BRIGHT_RED) << "while creating outs: failed to generate_key_derivation("
-                                          << publicViewKey << ", " << txkey.secretKey << ")";
+                                          << minerAddress.viewPublicKey << ", " << txkey.secretKey << ")";
                 return false;
             }
 
-            r = Crypto::derive_public_key(derivation, no, publicSpendKey, outEphemeralPubKey);
+            r = Crypto::derive_public_key(derivation, no, minerAddress.spendPublicKey, outEphemeralPubKey);
 
             if (!(r))
             {
                 logger(ERROR, BRIGHT_RED) << "while creating outs: failed to derive_public_key(" << derivation << ", "
-                                          << no << ", " << publicSpendKey << ")";
+                                          << no << ", " << minerAddress.spendPublicKey << ")";
                 return false;
             }
 
@@ -890,14 +874,8 @@ namespace CryptoNote
     Transaction CurrencyBuilder::generateGenesisTransaction()
     {
         CryptoNote::Transaction tx;
-
-        const auto publicViewKey = Constants::NULL_PUBLIC_KEY;
-        const auto publicSpendKey = Constants::NULL_PUBLIC_KEY;
-
-        m_currency.constructMinerTx(
-            1, 0, 0, 0, 0, 0, publicViewKey, publicSpendKey, tx
-        );
-
+        CryptoNote::AccountPublicAddress ac;
+        m_currency.constructMinerTx(1, 0, 0, 0, 0, 0, ac, tx); // zero fee in genesis
         return tx;
     }
 

@@ -26,11 +26,7 @@ void MemoryBlockchainStorage::pushBlock(RawBlock &&rawBlock)
 
 RawBlock MemoryBlockchainStorage::getBlockByIndex(uint32_t index) const
 {
-    if (index >= getBlockCount())
-    {
-        throw std::out_of_range("MemoryBlockchainStorage, index < blockCount!");
-    }
-
+    assert(index < getBlockCount());
     return blocks[index];
 }
 
