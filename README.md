@@ -1,14 +1,14 @@
 # CryptoPayAfrica (CPA Coin)
 ##### Bringing Blockchain to Africa
 
-[![Discord](https://img.shields.io/discord/471645937606066176?label=CryptoPayAfrica%20Discord)](https://discord.gg/HmTCVbS) [![GitHub contributors](https://img.shields.io/github/contributors-anon/devafrica/cpacore?label=Contributors)](https://github.com/devafrica/cpacore/graphs/contributors) [![GitHub issues](https://img.shields.io/github/issues/devafrica/cpacore?label=Issues)](https://github.com/devafrica/cpacore/issues) ![GitHub stars](https://img.shields.io/github/stars/devafrica/cpacore?label=Github%20Stars)
+[![Discord](https://img.shields.io/discord/471645937606066176?label=CryptoPayAfrica%20Discord)](https://discord.gg/HmTCVbS) [![GitHub contributors](https://img.shields.io/github/contributors-anon/devafrica/cpacoin?label=Contributors)](https://github.com/devafrica/cpacoin/graphs/contributors) [![GitHub issues](https://img.shields.io/github/issues/devafrica/cpacoin?label=Issues)](https://github.com/devafrica/cpacoin/issues) ![GitHub stars](https://img.shields.io/github/stars/devafrica/cpacoin?label=Github%20Stars)
 
 ### Join our many platforms and help us advance CPA
 ![Twitter Follow](https://img.shields.io/twitter/follow/cpacoin1?style=social)
 ### CPA Coin Core Build Code
 
 **Cpa Coin Core**
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/devafrica/cpacore)  
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/devafrica/cpacoin)  
   **Windows Gui Wallet Latest**
   [![GitHub All Releases](https://img.shields.io/github/downloads/devafrica/cpacoin/total?label=Downloads)](https://github.com/devafrica/cpa-wallet-proton/releases/download/3.2.1/CpaCoin.Wallet.Setup.3.2.1.exe)
 
