@@ -3,7 +3,7 @@
 
 [![Discord](https://img.shields.io/discord/471645937606066176?label=CryptoPayAfrica%20Discord)](https://discord.gg/HmTCVbS) [![GitHub contributors](https://img.shields.io/github/contributors-anon/devafrica/cpacore?label=Contributors)](https://github.com/devafrica/cpacore/graphs/contributors) [![GitHub issues](https://img.shields.io/github/issues/devafrica/cpacore?label=Issues)](https://github.com/devafrica/cpacore/issues) ![GitHub stars](https://img.shields.io/github/stars/devafrica/cpacore?label=Github%20Stars)
 
-### Join our many platforms and help us advance CPA 
+### Join our many platforms and help us advance CPA
 ![Twitter Follow](https://img.shields.io/twitter/follow/cpacoin1?style=social)
 ### CPA Coin Core Build Code
 
@@ -243,4 +243,3 @@ pm2 save
 ### Contributing Projects
 
 [![cryptonote](https://user-images.githubusercontent.com/34389545/72484723-d84bf700-37ca-11ea-812e-e24cd7bf9fca.png)](https://cryptonote.org/)[![bytecoin](https://user-images.githubusercontent.com/34389545/72484467-ef3e1980-37c9-11ea-903d-3d1266e9c4c2.png)](https://bytecoin.org/)[![monero](https://user-images.githubusercontent.com/34389545/72484448-e0576700-37c9-11ea-934a-15a7d9231709.png)](https://web.getmonero.org/)[![forknote](https://user-images.githubusercontent.com/34389545/72484430-d59cd200-37c9-11ea-8529-e06ae2426dca.png)](http://forknote.net/)[![turtlecoin](https://user-images.githubusercontent.com/34389545/72484404-c0c03e80-37c9-11ea-8754-0b5a8e797965.png)](https://turtlecoin.lol)
-
