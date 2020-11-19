@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 // Copyright (c) 2019, The CyprusCoin Developers
 //
 // Please see the included LICENSE file for more information.
@@ -264,7 +264,7 @@ namespace CryptoNote
 #define INVOKE_HANDLER(CMD, Handler)                                                           \
     case CMD::ID:                                                                              \
     {                                                                                          \
-        ret = invokeAdaptor<CMD>(cmd.buf, out, ctx, std::bind(Handler, this, _1, _2, _3, _4)); \
+        ret = invokeAdaptor<CMD>(cmd.buf, out, ctx, std::bind(Handler, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4)); \
         break;                                                                                 \
     }
 
@@ -1133,9 +1133,7 @@ namespace CryptoNote
         {
             return false;
         }
-        logger(Logging::TRACE) << context << "REMOTE PEERLIST: TIME_DELTA: " << delta
-                               << ", remote peerlist size=" << peerlist_.size();
-        logger(Logging::TRACE) << context << "REMOTE PEERLIST: " << print_peerlist_to_string(peerlist_);
+
         return m_peerlist.merge_peerlist(peerlist_);
     }
     //-----------------------------------------------------------------------------------

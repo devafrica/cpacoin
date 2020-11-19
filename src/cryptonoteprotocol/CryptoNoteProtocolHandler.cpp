@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -55,7 +55,7 @@ namespace CryptoNote
 
             for (const auto &rawBlock : rawBlocks)
             {
-                legacy.emplace_back(RawBlockLegacy {rawBlock.block, rawBlock.transactions});
+                legacy.emplace_back(rawBlock.block, rawBlock.transactions);
             }
 
             return legacy;
@@ -353,7 +353,7 @@ namespace CryptoNote
                 ss << "You are " << std::abs(diff) << " blocks (" << days << " days) ahead ";
             }
 
-            ss << "the current peer you're connected to. Africa`s Preferred Currency! ";
+            ss << "the current peer you're connected to. Africa United ";
 
             auto logLevel = Logging::TRACE;
             /* Log at different levels depending upon if we're ahead, behind, and if it's

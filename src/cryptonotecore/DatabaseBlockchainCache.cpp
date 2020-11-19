@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -580,7 +580,7 @@ namespace CryptoNote
 
         if (getTopBlockIndex() == 0)
         {
-            logger(Logging::DEBUGGING) << "top block index is nill, add genesis block";
+            logger(Logging::DEBUGGING) << "top block index is null, add genesis block";
             addGenesisBlock(CachedBlock(currency.genesisBlock()));
         }
     }
@@ -1189,7 +1189,7 @@ namespace CryptoNote
     bool DatabaseBlockchainCache::checkIfSpent(const Crypto::KeyImage &keyImage, uint32_t blockIndex) const
     {
         auto batch = BlockchainReadBatch().requestBlockIndexBySpentKeyImage(keyImage);
-        auto res = database.read(batch);
+        auto res = database.readThreadSafe(batch);
         if (res)
         {
             logger(Logging::ERROR) << "checkIfSpent failed, request to database failed: " << res.message();

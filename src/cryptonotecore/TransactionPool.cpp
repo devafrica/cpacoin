@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -12,31 +12,101 @@
 
 namespace CryptoNote
 {
-    // lhs > hrs
+    /* Is the left hand side preferred over the right hand side? */
     bool TransactionPool::TransactionPriorityComparator::
         operator()(const PendingTransactionInfo &lhs, const PendingTransactionInfo &rhs) const
     {
         const CachedTransaction &left = lhs.cachedTransaction;
         const CachedTransaction &right = rhs.cachedTransaction;
 
-        // price(lhs) = lhs.fee / lhs.blobSize
-        // price(lhs) > price(rhs) -->
-        // lhs.fee / lhs.blobSize > rhs.fee / rhs.blobSize -->
-        // lhs.fee * rhs.blobSize > rhs.fee * lhs.blobSize
+        /* We want to work out if fee per byte(lhs) is greater than fee per byte(rhs).
+         * Fee per byte is calculated by (lhs.fee / lhs.size) > (rhs.fee / rhs.size).
+         * We can rearrange this to (lhs.fee * rhs.size) > (rhs.fee * lhs.size),
+         * which is a little quicker to execute. Since the result is a 128
+         * bit multiplication, we store the result in two uint64's. */
         uint64_t lhs_hi, lhs_lo = mul128(left.getTransactionFee(), right.getTransactionBinaryArray().size(), &lhs_hi);
         uint64_t rhs_hi, rhs_lo = mul128(right.getTransactionFee(), left.getTransactionBinaryArray().size(), &rhs_hi);
 
-        return
-            // prefer more profitable transactions
-            (lhs_hi > rhs_hi) || (lhs_hi == rhs_hi && lhs_lo > rhs_lo) ||
-            // prefer smaller
-            (lhs_hi == rhs_hi && lhs_lo == rhs_lo
-             && left.getTransactionBinaryArray().size() < right.getTransactionBinaryArray().size())
-            ||
-            // prefer older
-            (lhs_hi == rhs_hi && lhs_lo == rhs_lo
-             && left.getTransactionBinaryArray().size() == right.getTransactionBinaryArray().size()
-             && lhs.receiveTime < rhs.receiveTime);
+        /* If the left hand side high bits are greater than the right hand
+         * side high bits, or the high bits are equal and the left hand side
+         * low bits are equal, then the lhs is larger. */
+        const bool rightHandSideMoreProfitable
+            = lhs_hi > rhs_hi || (lhs_hi == rhs_hi && lhs_lo > rhs_lo);
+
+        const bool leftHandSideMoreProfitable
+            = rhs_hi > lhs_hi || (lhs_hi == rhs_hi && rhs_lo > lhs_lo);
+
+        /* First sort by profitability, fee per byte, higher fee per byte preferred */
+        if (rightHandSideMoreProfitable)
+        {
+            return true;
+        }
+        else if (leftHandSideMoreProfitable)
+        {
+            return false;
+        }
+
+        const uint64_t leftAmount = left.getTransactionAmount();
+        const uint64_t rightAmount = right.getTransactionAmount();
+
+        /* Next sort by total amount transferred, larger amounts preferred */
+        if (leftAmount > rightAmount)
+        {
+            return true;
+        }
+        else if (rightAmount > leftAmount)
+        {
+            return false;
+        }
+
+        /* Figure out the ratio of inputs to outputs, ensuring we don't divide
+         * by zero. */
+        const double leftInputOutputRatio = left.getTransaction().outputs.size() == 0
+            ? std::numeric_limits<double>::max()
+            : left.getTransaction().inputs.size() / left.getTransaction().outputs.size();
+
+        const double rightInputOutputRatio = right.getTransaction().outputs.size() == 0
+            ? std::numeric_limits<double>::max()
+            : right.getTransaction().inputs.size() / right.getTransaction().outputs.size();
+
+        /* Next sort by ratio of inputs to outputs, higher ratio preferred
+         * (Less outputs = more 'optimized' transaction). */
+        if (leftInputOutputRatio > rightInputOutputRatio)
+        {
+            return true;
+        }
+        else if (rightInputOutputRatio > leftInputOutputRatio)
+        {
+            return false;
+        }
+
+        const size_t leftSize = left.getTransactionBinaryArray().size();
+        const size_t rightSize = right.getTransactionBinaryArray().size();
+
+        /* Next sort by size of transaction, smaller transactions preferred. */
+        if (leftSize < rightSize)
+        {
+            return true;
+        }
+        else if (rightSize < leftSize)
+        {
+            return false;
+        }
+
+        /* Next, prefer older transactions. receiveTime is a unix timestamp,
+         * so smaller = older. */
+        if (lhs.receiveTime < rhs.receiveTime)
+        {
+            return true;
+        }
+        else if (rhs.receiveTime < lhs.receiveTime)
+        {
+            return false;
+        }
+
+        /* Everything is the same! Return true because we've gotta return
+         * something.. */
+        return true;
     }
 
     const Crypto::Hash &TransactionPool::PendingTransactionInfo::getTransactionHash() const
@@ -72,6 +142,8 @@ namespace CryptoNote
             pendingTx.paymentId = paymentId;
         }
 
+        std::scoped_lock lock(m_transactionsMutex);
+
         if (transactionHashIndex.count(pendingTx.getTransactionHash()) > 0)
         {
             logger(Logging::DEBUGGING) << "pushTransaction: transaction hash already present in index";
@@ -87,11 +159,28 @@ namespace CryptoNote
         mergeStates(poolState, transactionState);
 
         logger(Logging::DEBUGGING) << "pushed transaction " << pendingTx.getTransactionHash() << " to pool";
+
         return transactionHashIndex.insert(std::move(pendingTx)).second;
+    }
+
+    const std::optional<CachedTransaction> TransactionPool::tryGetTransaction(const Crypto::Hash &hash) const
+    {
+        std::scoped_lock lock(m_transactionsMutex);
+
+        auto it = transactionHashIndex.find(hash);
+
+        if (it != transactionHashIndex.end())
+        {
+            return it->cachedTransaction;
+        }
+
+        return std::nullopt;
     }
 
     const CachedTransaction &TransactionPool::getTransaction(const Crypto::Hash &hash) const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         auto it = transactionHashIndex.find(hash);
         assert(it != transactionHashIndex.end());
 
@@ -100,6 +189,8 @@ namespace CryptoNote
 
     bool TransactionPool::removeTransaction(const Crypto::Hash &hash)
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         auto it = transactionHashIndex.find(hash);
         if (it == transactionHashIndex.end())
         {
@@ -114,13 +205,36 @@ namespace CryptoNote
         return true;
     }
 
+    size_t TransactionPool::getFusionTransactionCount() const
+    {
+        size_t fusionTransactionCount = 0;
+
+        std::scoped_lock lock(m_transactionsMutex);
+
+        for (const auto &transaction : transactionCostIndex)
+        {
+            size_t transactionFee = transaction.cachedTransaction.getTransactionFee();
+
+            if (transactionFee == 0)
+            {
+                fusionTransactionCount++;
+            }
+        }
+
+        return fusionTransactionCount;
+    }
+
     size_t TransactionPool::getTransactionCount() const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         return transactionHashIndex.size();
     }
 
     std::vector<Crypto::Hash> TransactionPool::getTransactionHashes() const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         std::vector<Crypto::Hash> hashes;
         for (auto it = transactionCostIndex.begin(); it != transactionCostIndex.end(); ++it)
         {
@@ -132,6 +246,8 @@ namespace CryptoNote
 
     bool TransactionPool::checkIfTransactionPresent(const Crypto::Hash &hash) const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         return transactionHashIndex.find(hash) != transactionHashIndex.end();
     }
 
@@ -142,6 +258,8 @@ namespace CryptoNote
 
     std::vector<CachedTransaction> TransactionPool::getPoolTransactions() const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         std::vector<CachedTransaction> result;
         result.reserve(transactionCostIndex.size());
 
@@ -159,6 +277,8 @@ namespace CryptoNote
         std::vector<CachedTransaction> regularTransactions;
 
         std::vector<CachedTransaction> fusionTransactions;
+
+        std::scoped_lock lock(m_transactionsMutex);
 
         for (const auto &transaction : transactionCostIndex)
         {
@@ -179,6 +299,8 @@ namespace CryptoNote
 
     uint64_t TransactionPool::getTransactionReceiveTime(const Crypto::Hash &hash) const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         auto it = transactionHashIndex.find(hash);
         assert(it != transactionHashIndex.end());
 
@@ -187,6 +309,8 @@ namespace CryptoNote
 
     std::vector<Crypto::Hash> TransactionPool::getTransactionHashesByPaymentId(const Crypto::Hash &paymentId) const
     {
+        std::scoped_lock lock(m_transactionsMutex);
+
         boost::optional<Crypto::Hash> p(paymentId);
 
         auto range = paymentIdIndex.equal_range(p);

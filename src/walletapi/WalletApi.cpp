@@ -1,5 +1,5 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -18,6 +18,25 @@ int main(int argc, char **argv)
     ApiConfig config = parseArguments(argc, argv);
 
     Logger::logger.setLogLevel(config.logLevel);
+
+    std::ofstream logFile;
+
+    if (config.loggingFilePath) {
+        logFile.open(*config.loggingFilePath, std::ios_base::app);
+    }
+
+    Logger::logger.setLogCallback([&config, &logFile](
+        const std::string prettyMessage,
+        const std::string message,
+        const Logger::LogLevel level,
+        const std::vector<Logger::LogCategory> categories) {
+
+        std::cout << prettyMessage << std::endl;
+
+        if (config.loggingFilePath) {
+            logFile << prettyMessage << std::endl;
+        }
+    });
 
     std::cout << CryptoNote::getProjectCLIHeader() << std::endl;
 

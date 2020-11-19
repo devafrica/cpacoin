@@ -1,5 +1,5 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -13,12 +13,14 @@ namespace Logger
 {
     enum LogLevel
     {
+        TRACE = 5,
         DEBUG = 4,
         INFO = 3,
         WARNING = 2,
         FATAL = 1,
         DISABLED = 0,
     };
+
     enum LogCategory
     {
         SYNC,
@@ -26,6 +28,8 @@ namespace Logger
         FILESYSTEM,
         SAVE,
         DAEMON,
+        DAEMON_RPC,
+        DATABASE,
     };
 
     std::string logLevelToString(const LogLevel level);

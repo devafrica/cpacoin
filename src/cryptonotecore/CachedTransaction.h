@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -8,6 +8,7 @@
 
 #include <CryptoNote.h>
 #include <boost/optional.hpp>
+#include <optional>
 
 namespace CryptoNote
 {
@@ -30,16 +31,20 @@ namespace CryptoNote
 
         uint64_t getTransactionFee() const;
 
+        uint64_t getTransactionAmount() const;
+
       private:
         Transaction transaction;
 
-        mutable boost::optional<BinaryArray> transactionBinaryArray;
+        mutable std::optional<BinaryArray> transactionBinaryArray;
 
-        mutable boost::optional<Crypto::Hash> transactionHash;
+        mutable std::optional<Crypto::Hash> transactionHash;
 
-        mutable boost::optional<Crypto::Hash> transactionPrefixHash;
+        mutable std::optional<Crypto::Hash> transactionPrefixHash;
 
-        mutable boost::optional<uint64_t> transactionFee;
+        mutable std::optional<uint64_t> transactionFee;
+
+        mutable std::optional<uint64_t> transactionAmount;
     };
 
 } // namespace CryptoNote

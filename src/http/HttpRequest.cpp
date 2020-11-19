@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -47,6 +47,11 @@ namespace CryptoNote
         }
     }
 
+    void HttpRequest::setMethod(const std::string &value)
+    {
+        method = value;
+    }
+
     void HttpRequest::setUrl(const std::string &u)
     {
         url = u;
@@ -54,7 +59,7 @@ namespace CryptoNote
 
     std::ostream &HttpRequest::printHttpRequest(std::ostream &os) const
     {
-        os << "POST " << url << " HTTP/1.1\r\n";
+        os << method << " " << url << " HTTP/1.1\r\n";
         auto host = headers.find("Host");
         if (host == headers.end())
         {

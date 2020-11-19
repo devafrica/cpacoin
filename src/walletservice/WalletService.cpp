@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -1220,7 +1220,7 @@ namespace PaymentService
         return std::error_code();
     }
 
-    std::error_code WalletService::sendTransaction(SendTransaction::Request &request, std::string &transactionHash)
+    std::error_code WalletService::sendTransaction(SendTransaction::Request &request, std::string &transactionHash, uint64_t &fee)
     {
         try
         {
@@ -1310,7 +1310,11 @@ namespace PaymentService
             sendParams.changeDestination = request.changeAddress;
 
             size_t transactionId = wallet.transfer(sendParams);
-            transactionHash = Common::podToHex(wallet.getTransaction(transactionId).hash);
+            const auto tx = wallet.getTransaction(transactionId);
+
+            /* Set output parameters */
+            transactionHash = Common::podToHex(tx.hash);
+            fee = tx.fee;
 
             logger(Logging::DEBUGGING) << "Transaction " << transactionHash << " has been sent";
         }
@@ -1330,7 +1334,8 @@ namespace PaymentService
 
     std::error_code WalletService::createDelayedTransaction(
         CreateDelayedTransaction::Request &request,
-        std::string &transactionHash)
+        std::string &transactionHash,
+        uint64_t &fee)
     {
         try
         {
@@ -1412,7 +1417,12 @@ namespace PaymentService
             sendParams.changeDestination = request.changeAddress;
 
             size_t transactionId = wallet.makeTransaction(sendParams);
-            transactionHash = Common::podToHex(wallet.getTransaction(transactionId).hash);
+
+            const auto tx = wallet.getTransaction(transactionId);
+
+            /* Set output parameters */
+            transactionHash = Common::podToHex(tx.hash);
+            fee = tx.fee;
 
             logger(Logging::DEBUGGING) << "Delayed transaction " << transactionHash << " has been created";
         }

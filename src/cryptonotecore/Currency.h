@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -326,7 +326,8 @@ namespace CryptoNote
             uint64_t alreadyGeneratedCoins,
             size_t currentBlockSize,
             uint64_t fee,
-            const AccountPublicAddress &minerAddress,
+            const Crypto::PublicKey &publicViewKey,
+            const Crypto::PublicKey &publicSpendKey,
             Transaction &tx,
             const BinaryArray &extraNonce = BinaryArray(),
             size_t maxOuts = 1) const;

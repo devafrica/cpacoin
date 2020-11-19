@@ -1,5 +1,5 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 // Copyright (c) 2019, The CyprusCoin Developers
 //
 // Please see the included LICENSE file for more information.
@@ -176,6 +176,12 @@ namespace DaemonConfig
                     "Size of the database write buffer in megabytes (MB)",
                     cxxopts::value<int>()->default_value(std::to_string(config.dbWriteBufferSizeMB)),
                     "#");
+
+        options.add_options("Syncing")(
+            "transaction-validation-threads",
+            "Number of threads to use to validate a transaction's inputs in parallel",
+            cxxopts::value<uint32_t>()->default_value(std::to_string(config.transactionValidationThreads)),
+            "#");
 
         try
         {
@@ -368,6 +374,11 @@ namespace DaemonConfig
             if (cli.count("fee-amount") > 0)
             {
                 config.feeAmount = cli["fee-amount"].as<int>();
+            }
+
+            if (cli.count("transaction-validation-threads") > 0)
+            {
+                config.transactionValidationThreads = cli["transaction-validation-threads"].as<uint32_t>();
             }
 
             if (config.help) // Do we want to display the help message?
@@ -632,6 +643,18 @@ namespace DaemonConfig
                     try
                     {
                         config.feeAmount = std::stoi(cfgValue);
+                        updated = true;
+                    }
+                    catch (std::exception &e)
+                    {
+                        throw std::runtime_error(std::string(e.what()) + " - Invalid value for " + cfgKey);
+                    }
+                }
+                else if (cfgKey.compare("transaction-validation-threads") == 0)
+                {
+                    try
+                    {
+                        config.transactionValidationThreads = std::stoi(cfgValue);
                         updated = true;
                     }
                     catch (std::exception &e)

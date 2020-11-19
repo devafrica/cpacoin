@@ -1,7 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -12,6 +12,7 @@
 #include <exception>
 #include <limits>
 #include <vector>
+#include <WalletTypes.h>
 
 namespace PaymentService
 {
@@ -419,7 +420,7 @@ namespace PaymentService
 
             std::string changeAddress;
 
-            uint64_t fee = 0;
+            WalletTypes::FeeType fee = WalletTypes::FeeType::MinimumFee();
 
             uint64_t anonymity;
 
@@ -435,6 +436,7 @@ namespace PaymentService
         struct Response
         {
             std::string transactionHash;
+            uint64_t fee;
 
             void serialize(CryptoNote::ISerializer &serializer);
         };
@@ -450,7 +452,7 @@ namespace PaymentService
 
             std::string changeAddress;
 
-            uint64_t fee = 0;
+            WalletTypes::FeeType fee = WalletTypes::FeeType::MinimumFee();
 
             uint64_t anonymity;
 
@@ -466,6 +468,7 @@ namespace PaymentService
         struct Response
         {
             std::string transactionHash;
+            uint64_t fee;
 
             void serialize(CryptoNote::ISerializer &serializer);
         };

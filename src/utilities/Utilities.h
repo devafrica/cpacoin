@@ -1,5 +1,5 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -36,6 +36,22 @@ namespace Utilities
     bool isSubtractionSafe(int64_t currentValue, uint64_t transferAmount);
 
     bool parseDaemonAddressFromString(std::string &host, uint16_t &port, std::string address);
+
+    uint64_t getTransactionFee(
+        const size_t transactionSize,
+        const uint64_t height,
+        const double feePerByte);
+
+    uint64_t getMinimumTransactionFee(
+        const size_t transactionSize,
+        const uint64_t height);
+
+    size_t estimateTransactionSize(
+        const uint64_t mixin,
+        const size_t numInputs,
+        const size_t numOutputs,
+        const bool havePaymentID,
+        const size_t extraDataSize);
 
     size_t getApproximateMaximumInputCount(
         const size_t transactionSize,

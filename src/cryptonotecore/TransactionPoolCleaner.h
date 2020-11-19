@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -42,7 +42,11 @@ namespace CryptoNote
 
         virtual const CachedTransaction &getTransaction(const Crypto::Hash &hash) const override;
 
+        virtual const std::optional<CachedTransaction> tryGetTransaction(const Crypto::Hash &hash) const override;
+
         virtual bool removeTransaction(const Crypto::Hash &hash) override;
+
+        virtual size_t getFusionTransactionCount() const override;
 
         virtual size_t getTransactionCount() const override;
 

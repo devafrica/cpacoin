@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -17,6 +17,8 @@ namespace CryptoNote
 
     struct IP2pEndpoint
     {
+        virtual ~IP2pEndpoint() {};
+
         virtual void relay_notify_to_all(
             int command,
             const BinaryArray &data_buff,
@@ -46,6 +48,8 @@ namespace CryptoNote
 
     struct p2p_endpoint_stub : public IP2pEndpoint
     {
+        ~p2p_endpoint_stub() {};
+
         virtual void relay_notify_to_all(
             int command,
             const BinaryArray &data_buff,

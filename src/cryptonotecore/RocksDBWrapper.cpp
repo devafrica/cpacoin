@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -183,6 +183,48 @@ std::error_code RocksDBWrapper::read(IReadBatch &batch)
             return make_error_code(CryptoNote::error::DataBaseErrorCodes::INTERNAL_ERROR);
         }
         resultStates.push_back(status.ok());
+    }
+
+    batch.submitRawResult(values, resultStates);
+    return std::error_code();
+}
+
+std::error_code RocksDBWrapper::readThreadSafe(IReadBatch &batch)
+{
+    if (state.load() != INITIALIZED)
+    {
+        throw std::runtime_error("Not initialized.");
+    }
+
+    rocksdb::ReadOptions readOptions;
+
+    std::vector<std::string> rawKeys(batch.getRawKeys());
+
+    std::vector<std::string> values(rawKeys.size());
+
+    std::vector<bool> resultStates;
+
+    int i = 0;
+
+    for (const std::string &key : rawKeys)
+    {
+        const rocksdb::Status status = db->Get(readOptions, rocksdb::Slice(key), &values[i]);
+
+        if (status.ok())
+        {
+            resultStates.push_back(true);
+        }
+        else
+        {
+            if (!status.IsNotFound())
+            {
+                return make_error_code(CryptoNote::error::DataBaseErrorCodes::INTERNAL_ERROR);
+            }
+
+            resultStates.push_back(false);
+        }
+
+        i++;
     }
 
     batch.submitRawResult(values, resultStates);

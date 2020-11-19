@@ -1,6 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2019-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -20,7 +20,7 @@ CachedTransaction::CachedTransaction(const Transaction &transaction): transactio
 CachedTransaction::CachedTransaction(const BinaryArray &transactionBinaryArray):
     transactionBinaryArray(transactionBinaryArray)
 {
-    if (!fromBinaryArray<Transaction>(transaction, this->transactionBinaryArray.get()))
+    if (!fromBinaryArray<Transaction>(transaction, this->transactionBinaryArray.value()))
     {
         throw std::runtime_error("CachedTransaction::CachedTransaction(BinaryArray&&), deserealization error.");
     }
@@ -33,37 +33,37 @@ const Transaction &CachedTransaction::getTransaction() const
 
 const Crypto::Hash &CachedTransaction::getTransactionHash() const
 {
-    if (!transactionHash.is_initialized())
+    if (!transactionHash)
     {
         transactionHash = getBinaryArrayHash(getTransactionBinaryArray());
     }
 
-    return transactionHash.get();
+    return transactionHash.value();
 }
 
 const Crypto::Hash &CachedTransaction::getTransactionPrefixHash() const
 {
-    if (!transactionPrefixHash.is_initialized())
+    if (!transactionPrefixHash)
     {
         transactionPrefixHash = getObjectHash(static_cast<const TransactionPrefix &>(transaction));
     }
 
-    return transactionPrefixHash.get();
+    return transactionPrefixHash.value();
 }
 
 const BinaryArray &CachedTransaction::getTransactionBinaryArray() const
 {
-    if (!transactionBinaryArray.is_initialized())
+    if (!transactionBinaryArray)
     {
         transactionBinaryArray = toBinaryArray(transaction);
     }
 
-    return transactionBinaryArray.get();
+    return transactionBinaryArray.value();
 }
 
 uint64_t CachedTransaction::getTransactionFee() const
 {
-    if (!transactionFee.is_initialized())
+    if (!transactionFee)
     {
         uint64_t summaryInputAmount = 0;
         uint64_t summaryOutputAmount = 0;
@@ -91,5 +91,22 @@ uint64_t CachedTransaction::getTransactionFee() const
         transactionFee = summaryInputAmount - summaryOutputAmount;
     }
 
-    return transactionFee.get();
+    return transactionFee.value();
+}
+
+uint64_t CachedTransaction::getTransactionAmount() const
+{
+    if (!transactionAmount)
+    {
+        uint64_t summaryOutputAmount = 0;
+
+        for (const auto &out : transaction.outputs)
+        {
+            summaryOutputAmount += out.amount;
+        }
+
+        transactionAmount = summaryOutputAmount;
+    }
+
+    return transactionAmount.value();
 }
