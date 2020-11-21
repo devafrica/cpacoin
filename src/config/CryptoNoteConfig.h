@@ -76,7 +76,7 @@ const uint32_t KEY_IMAGE_CHECKING_BLOCK_INDEX                = 0;
         const double MINIMUM_FEE_PER_BYTE_V1 = 50.00 / FEE_PER_BYTE_CHUNK_SIZE;
 
         /* Height for our first fee to byte change to take effect. */
-        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 15500;
+        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 20000;
 
 
 
@@ -149,7 +149,7 @@ const uint64_t TRANSACTION_INPUT_BLOCKTIME_VALIDATION_HEIGHT = 0;
 /* Coinbase transactions must include the recipient address + tx priv
  * key in tx_extra to verify the outputs go to that address after this
  * height. */
-const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 1;
+const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 20000;
 
 /* This describes how many blocks of "wiggle" room transactions have regarding
    when the outputs can be spent based on a reasonable belief that the outputs
