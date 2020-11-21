@@ -76,7 +76,7 @@ const uint32_t KEY_IMAGE_CHECKING_BLOCK_INDEX                = 0;
         const double MINIMUM_FEE_PER_BYTE_V1 = 50.00 / FEE_PER_BYTE_CHUNK_SIZE;
 
         /* Height for our first fee to byte change to take effect. */
-        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 16000;
+        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 15500;
 
 
 
