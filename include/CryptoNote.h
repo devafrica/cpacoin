@@ -124,7 +124,7 @@ namespace CryptoNote
 
             writer.Key("transactions");
             writer.StartArray();
-            for (auto transaction : transactions)
+            for (const auto &transaction : transactions)
             {
                 writer.String(Common::toHex(transaction));
             }
@@ -161,7 +161,7 @@ namespace CryptoNote
     {
         std::vector<std::string> transactions;
 
-        for (auto transaction : block.transactions)
+        for (const auto &transaction : block.transactions)
         {
             transactions.push_back(Common::toHex(transaction));
         }
@@ -179,7 +179,7 @@ namespace CryptoNote
 
         std::vector<std::string> transactions = j.at("transactions").get<std::vector<std::string>>();
 
-        for (const auto transaction : transactions)
+        for (const auto &transaction : transactions)
         {
             block.transactions.push_back(Common::fromHex(transaction));
         }

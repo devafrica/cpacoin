@@ -285,6 +285,7 @@ namespace CryptoNote
         {
             auto batch = BlockchainReadBatch().requestTransactionCountByPaymentId(paymentId);
             auto error = database.read(batch);
+
             if (error)
             {
                 throw std::system_error(error, "Error while reading transactions count by payment id");
@@ -1190,6 +1191,7 @@ namespace CryptoNote
     {
         auto batch = BlockchainReadBatch().requestBlockIndexBySpentKeyImage(keyImage);
         auto res = database.readThreadSafe(batch);
+
         if (res)
         {
             logger(Logging::ERROR) << "checkIfSpent failed, request to database failed: " << res.message();
@@ -2127,7 +2129,7 @@ namespace CryptoNote
 
         std::unordered_map<Crypto::Hash, std::vector<uint64_t>> indexes;
 
-        for (const auto [txHash, transaction] : txs)
+        for (const auto &[txHash, transaction] : txs)
         {
             indexes[txHash].assign(transaction.globalIndexes.begin(), transaction.globalIndexes.end());
         }

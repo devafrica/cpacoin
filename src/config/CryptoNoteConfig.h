@@ -2,6 +2,7 @@
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
 // Copyright (c) 2018-2020, The CryptoPayAfrica Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -76,14 +77,14 @@ const uint32_t KEY_IMAGE_CHECKING_BLOCK_INDEX                = 0;
         const double MINIMUM_FEE_PER_BYTE_V1 = 50.00 / FEE_PER_BYTE_CHUNK_SIZE;
 
         /* Height for our first fee to byte change to take effect. */
-        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 250000;
+        const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 20000;
 
 
 
 
 /* This section defines our minimum and maximum mixin counts required for transactions */
 const uint64_t MINIMUM_MIXIN_V1                              = 0;
-const uint64_t MAXIMUM_MIXIN_V1                              = 0;
+const uint64_t MAXIMUM_MIXIN_V1                              = 3;
 
 const uint64_t MINIMUM_MIXIN_V2                              = 1;
 const uint64_t MAXIMUM_MIXIN_V2                              = 12;
@@ -99,6 +100,7 @@ const uint32_t MIXIN_LIMITS_V3_HEIGHT                        = 50000;
 /* The mixin to use by default with cpawallet and cpa-service */
 /* DEFAULT_MIXIN_V0 is the mixin used before MIXIN_LIMITS_V1_HEIGHT is started */
 const uint64_t DEFAULT_MIXIN_V0                              = 3;
+
 const uint64_t DEFAULT_MIXIN_V1                              = MAXIMUM_MIXIN_V1;
 const uint64_t DEFAULT_MIXIN_V2                              = MAXIMUM_MIXIN_V2;
 const uint64_t DEFAULT_MIXIN_V3                              = MAXIMUM_MIXIN_V3;
@@ -149,7 +151,7 @@ const uint64_t TRANSACTION_INPUT_BLOCKTIME_VALIDATION_HEIGHT = 0;
 /* Coinbase transactions must include the recipient address + tx priv
  * key in tx_extra to verify the outputs go to that address after this
  * height. */
-const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 1;
+const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 20000;
 
 /* This describes how many blocks of "wiggle" room transactions have regarding
    when the outputs can be spent based on a reasonable belief that the outputs
@@ -204,12 +206,13 @@ const uint64_t FORK_HEIGHTS[] =
     5000, // 7
     10000, // 8
     15000, //9
-    1000000, //10
+    20000, //10
+    1000000, //11
     
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
-const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 9;
+const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 11;
 
 const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
@@ -291,7 +294,6 @@ const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
     const uint32_t P2P_DEFAULT_CONNECTIONS_COUNT = 8;
 
     const size_t P2P_DEFAULT_WHITELIST_CONNECTIONS_PERCENT = 70;
-
     const uint32_t P2P_DEFAULT_HANDSHAKE_INTERVAL = 60; // seconds
     const uint32_t P2P_DEFAULT_PACKET_MAX_SIZE = 50000000; // 50000000 bytes maximum packet size
     const uint32_t P2P_DEFAULT_PEERS_IN_HANDSHAKE = 250;
@@ -302,10 +304,15 @@ const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
     const size_t P2P_DEFAULT_HANDSHAKE_INVOKE_TIMEOUT = 5000; // 5 seconds
     const char P2P_STAT_TRUSTED_PUB_KEY[] = "";
 
-    const uint64_t DATABASE_WRITE_BUFFER_MB_DEFAULT_SIZE = 256; // 256 GB
-    const uint64_t DATABASE_READ_BUFFER_MB_DEFAULT_SIZE = 128; // 128 GB
-    const uint32_t DATABASE_DEFAULT_MAX_OPEN_FILES = 125; // 125 files
-    const uint16_t DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT = 4; // 4 DB threads
+    const uint64_t ROCKSDB_WRITE_BUFFER_MB = 256; // 256 MB
+    const uint64_t ROCKSDB_READ_BUFFER_MB = 128; // 128 MB
+    const uint64_t ROCKSDB_MAX_OPEN_FILES = 125; // 125 files
+    const uint64_t ROCKSDB_BACKGROUND_THREADS = 4; // 4 DB threads
+
+    const uint64_t LEVELDB_WRITE_BUFFER_MB = 64; // 64 MB
+    const uint64_t LEVELDB_READ_BUFFER_MB = 64; // 64 MB
+    const uint64_t LEVELDB_MAX_OPEN_FILES = 128; // 128 files
+    const uint64_t LEVELDB_MAX_FILE_SIZE_MB = 1024; // 1024MB = 1GB
 
 const char     LATEST_VERSION_URL[]                          = "http://latest.cryptopay.org.za";
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";
