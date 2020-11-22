@@ -1,5 +1,6 @@
 // Portions Copyright (c) 2018-2019, The Catalyst Developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 

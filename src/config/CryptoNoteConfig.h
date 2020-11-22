@@ -1,6 +1,7 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -176,7 +177,7 @@ const uint32_t UPGRADE_HEIGHT_V2                             = 2;
 const uint32_t UPGRADE_HEIGHT_V3                             = 3;
 const uint32_t UPGRADE_HEIGHT_V4                             = 4; // Upgrade height for CN-Lite Variant 1 switch.
 const uint32_t UPGRADE_HEIGHT_V5                             = 5; // Upgrade height for CN-T Variant 2 switch.
-const uint32_t UPGRADE_HEIGHT_V6                             = 1000000; // Upgrade height for Chukwa switch. 
+const uint32_t UPGRADE_HEIGHT_V6                             = 1000000; // Upgrade height for Chukwa switch.
 const uint32_t UPGRADE_HEIGHT_CURRENT                        = UPGRADE_HEIGHT_V5;
 
         /* This value is here to handle the difficult reset needed for the PoW upgrade
@@ -204,7 +205,7 @@ const uint64_t FORK_HEIGHTS[] =
     10000, // 8
     15000, //9
     1000000, //10
-    
+
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
