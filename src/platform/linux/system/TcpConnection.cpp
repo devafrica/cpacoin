@@ -1,6 +1,5 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -8,8 +7,6 @@
 
 #include <arpa/inet.h>
 #include <cassert>
-#include <cstdint>
-#include <stdexcept>
 #include <sys/epoll.h>
 #include <system/ErrorMessage.h>
 #include <system/InterruptedException.h>

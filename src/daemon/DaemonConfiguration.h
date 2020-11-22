@@ -1,5 +1,4 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 // Copyright (c) 2019, The CyprusCoin Developers
 //
 // Please see the included LICENSE file for more information.
@@ -29,6 +28,10 @@ namespace DaemonConfig
             checkPoints = "default";
             logFile = logfile.str();
             logLevel = Logging::WARNING;
+            dbMaxOpenFiles = CryptoNote::DATABASE_DEFAULT_MAX_OPEN_FILES;
+            dbReadCacheSizeMB = CryptoNote::DATABASE_READ_BUFFER_MB_DEFAULT_SIZE;
+            dbThreads = CryptoNote::DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT;
+            dbWriteBufferSizeMB = CryptoNote::DATABASE_WRITE_BUFFER_MB_DEFAULT_SIZE;
             rewindToHeight = 0;
             p2pInterface = "0.0.0.0";
             p2pPort = CryptoNote::P2P_DEFAULT_PORT;
@@ -49,7 +52,6 @@ namespace DaemonConfig
             dumpConfig = false;
             enableDbCompression = false;
             resync = false;
-            enableLevelDB = false;
         }
 
         std::string dataDirectory;
@@ -72,7 +74,7 @@ namespace DaemonConfig
 
         std::vector<std::string> seedNodes;
 
-        std::string enableCors;
+        std::vector<std::string> enableCors;
 
         int logLevel;
 
@@ -86,15 +88,13 @@ namespace DaemonConfig
 
         uint32_t transactionValidationThreads;
 
-        uint64_t dbThreads;
+        int dbThreads;
 
-        uint64_t dbMaxOpenFiles;
+        int dbMaxOpenFiles;
 
-        uint64_t dbWriteBufferSizeMB;
+        int dbWriteBufferSizeMB;
 
-        uint64_t dbReadCacheSizeMB;
-
-        uint64_t dbMaxFileSizeMB;
+        int dbReadCacheSizeMB;
 
         uint32_t rewindToHeight;
 
@@ -111,8 +111,6 @@ namespace DaemonConfig
         bool resync;
 
         bool p2pResetPeerstate;
-
-        bool enableLevelDB;
 
         std::string configFile;
 

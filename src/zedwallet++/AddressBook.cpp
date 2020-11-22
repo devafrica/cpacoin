@@ -1,5 +1,4 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -296,7 +295,7 @@ void listAddressBook()
 
     size_t i = 1;
 
-    for (const auto &entry : addressBook)
+    for (const auto entry : addressBook)
     {
         std::cout << InformationMsg("Address Book Entry: ") << InformationMsg(i) << InformationMsg(" | ")
                   << SuccessMsg(entry.friendlyName) << "\n"

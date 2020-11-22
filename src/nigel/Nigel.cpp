@@ -1,5 +1,4 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -162,7 +161,7 @@ std::tuple<bool, std::vector<WalletTypes::WalletBlockInfo>, std::optional<Wallet
         {
             const auto rawBlocks = j.at("items").get<std::vector<CryptoNote::RawBlock>>();
 
-            for (const auto &rawBlock : rawBlocks)
+            for (const auto rawBlock : rawBlocks)
             {
                 CryptoNote::BlockTemplate block;
 
@@ -507,7 +506,7 @@ std::tuple<bool, std::unordered_map<Crypto::Hash, std::vector<uint64_t>>>
            we can't just .get<std::unordered_map ...> */
         nlohmann::json indexes = j.at("indexes");
 
-        for (const auto &index : indexes)
+        for (const auto index : indexes)
         {
             result[index.at("key").get<Crypto::Hash>()] = index.at("value").get<std::vector<uint64_t>>();
         }

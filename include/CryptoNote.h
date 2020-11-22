@@ -1,6 +1,5 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -124,7 +123,7 @@ namespace CryptoNote
 
             writer.Key("transactions");
             writer.StartArray();
-            for (const auto &transaction : transactions)
+            for (auto transaction : transactions)
             {
                 writer.String(Common::toHex(transaction));
             }
@@ -161,7 +160,7 @@ namespace CryptoNote
     {
         std::vector<std::string> transactions;
 
-        for (const auto &transaction : block.transactions)
+        for (auto transaction : block.transactions)
         {
             transactions.push_back(Common::toHex(transaction));
         }
@@ -179,7 +178,7 @@ namespace CryptoNote
 
         std::vector<std::string> transactions = j.at("transactions").get<std::vector<std::string>>();
 
-        for (const auto &transaction : transactions)
+        for (const auto transaction : transactions)
         {
             block.transactions.push_back(Common::fromHex(transaction));
         }

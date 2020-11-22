@@ -1,7 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -285,7 +284,6 @@ namespace CryptoNote
         {
             auto batch = BlockchainReadBatch().requestTransactionCountByPaymentId(paymentId);
             auto error = database.read(batch);
-
             if (error)
             {
                 throw std::system_error(error, "Error while reading transactions count by payment id");
@@ -1191,7 +1189,6 @@ namespace CryptoNote
     {
         auto batch = BlockchainReadBatch().requestBlockIndexBySpentKeyImage(keyImage);
         auto res = database.readThreadSafe(batch);
-
         if (res)
         {
             logger(Logging::ERROR) << "checkIfSpent failed, request to database failed: " << res.message();
@@ -2129,7 +2126,7 @@ namespace CryptoNote
 
         std::unordered_map<Crypto::Hash, std::vector<uint64_t>> indexes;
 
-        for (const auto &[txHash, transaction] : txs)
+        for (const auto [txHash, transaction] : txs)
         {
             indexes[txHash].assign(transaction.globalIndexes.begin(), transaction.globalIndexes.end());
         }

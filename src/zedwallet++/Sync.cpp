@@ -1,5 +1,4 @@
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -76,7 +75,7 @@ void syncWallet(const std::shared_ptr<WalletBackend> walletBackend)
 
         /* Get any transactions in between the previous height and the new
            height */
-        for (const auto &tx : walletBackend->getTransactionsRange(walletBlockCount, tmpWalletBlockCount))
+        for (const auto tx : walletBackend->getTransactionsRange(walletBlockCount, tmpWalletBlockCount))
         {
             /* Don't print out fusion transactions */
             if (!tx.isFusionTransaction())

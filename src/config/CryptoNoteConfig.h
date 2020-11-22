@@ -1,7 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2014-2018, The Monero Project
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -55,7 +54,7 @@ static_assert(sizeof(GENESIS_COINBASE_TX_HEX)/sizeof(*GENESIS_COINBASE_TX_HEX) !
 /* This is the unix timestamp of the first "mined" block (technically block 2, not the genesis block)
    You can get this value by doing "print_block 2" in TurtleCoind. It is used to know what timestamp
    to import from when the block height cannot be found in the node or the node is offline. */
-const uint64_t GENESIS_BLOCK_TIMESTAMP                       = 1604468328;
+const uint64_t GENESIS_BLOCK_TIMESTAMP                       = 1600181351;
 
 const size_t   CRYPTONOTE_REWARD_BLOCKS_WINDOW               = 100;
 const size_t   CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE     = 100000; //size of block (bytes) after which reward for block calculated using block size
@@ -99,7 +98,6 @@ const uint32_t MIXIN_LIMITS_V3_HEIGHT                        = 50000;
 /* The mixin to use by default with cpawallet and cpa-service */
 /* DEFAULT_MIXIN_V0 is the mixin used before MIXIN_LIMITS_V1_HEIGHT is started */
 const uint64_t DEFAULT_MIXIN_V0                              = 3;
-
 const uint64_t DEFAULT_MIXIN_V1                              = MAXIMUM_MIXIN_V1;
 const uint64_t DEFAULT_MIXIN_V2                              = MAXIMUM_MIXIN_V2;
 const uint64_t DEFAULT_MIXIN_V3                              = MAXIMUM_MIXIN_V3;
@@ -145,12 +143,12 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 1;
    and other possible unexpected behavior */
 const uint64_t TRANSACTION_SIGNATURE_COUNT_VALIDATION_HEIGHT = 0;
 const uint64_t BLOCK_BLOB_SHUFFLE_CHECK_HEIGHT               = 0;
-const uint64_t TRANSACTION_INPUT_BLOCKTIME_VALIDATION_HEIGHT = 0;
+const uint64_t TRANSACTION_INPUT_BLOCKTIME_VALIDATION_HEIGHT = 2;
 
 /* Coinbase transactions must include the recipient address + tx priv
  * key in tx_extra to verify the outputs go to that address after this
  * height. */
-const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 20000;
+const uint64_t COINBASE_TRANSACTION_OUTPUT_CLAIMING_HEIGHT = 1;
 
 /* This describes how many blocks of "wiggle" room transactions have regarding
    when the outputs can be spent based on a reasonable belief that the outputs
@@ -205,13 +203,12 @@ const uint64_t FORK_HEIGHTS[] =
     5000, // 7
     10000, // 8
     15000, //9
-    20000, //10
-    1000000, //11
+    1000000, //10
     
 };
 
 /* MAKE SURE TO UPDATE THIS VALUE WITH EVERY MAJOR RELEASE BEFORE A FORK */
-const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 10;
+const uint64_t SOFTWARE_SUPPORTED_FORK_INDEX                 = 9;
 
 const uint64_t FORK_HEIGHTS_SIZE = sizeof(FORK_HEIGHTS) / sizeof(*FORK_HEIGHTS);
 
@@ -278,9 +275,9 @@ const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
 
   // P2P Network Configuration Section - This defines our current P2P network version
     // and the minimum version for communication between nodes
-    const uint8_t P2P_CURRENT_VERSION = 11;
+    const uint8_t P2P_CURRENT_VERSION = 10;
 
-    const uint8_t P2P_MINIMUM_VERSION = 10;
+    const uint8_t P2P_MINIMUM_VERSION = 11;
 
     // This defines the minimum P2P version required for lite blocks propogation
     const uint8_t P2P_LITE_BLOCKS_PROPOGATION_VERSION = 4;
@@ -293,6 +290,7 @@ const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
     const uint32_t P2P_DEFAULT_CONNECTIONS_COUNT = 8;
 
     const size_t P2P_DEFAULT_WHITELIST_CONNECTIONS_PERCENT = 70;
+
     const uint32_t P2P_DEFAULT_HANDSHAKE_INTERVAL = 60; // seconds
     const uint32_t P2P_DEFAULT_PACKET_MAX_SIZE = 50000000; // 50000000 bytes maximum packet size
     const uint32_t P2P_DEFAULT_PEERS_IN_HANDSHAKE = 250;
@@ -303,15 +301,10 @@ const size_t   P2P_LOCAL_GRAY_PEERLIST_LIMIT                 =  5000;
     const size_t P2P_DEFAULT_HANDSHAKE_INVOKE_TIMEOUT = 5000; // 5 seconds
     const char P2P_STAT_TRUSTED_PUB_KEY[] = "";
 
-    const uint64_t ROCKSDB_WRITE_BUFFER_MB = 256; // 256 MB
-    const uint64_t ROCKSDB_READ_BUFFER_MB = 128; // 128 MB
-    const uint64_t ROCKSDB_MAX_OPEN_FILES = 125; // 125 files
-    const uint64_t ROCKSDB_BACKGROUND_THREADS = 4; // 4 DB threads
-
-    const uint64_t LEVELDB_WRITE_BUFFER_MB = 64; // 64 MB
-    const uint64_t LEVELDB_READ_BUFFER_MB = 64; // 64 MB
-    const uint64_t LEVELDB_MAX_OPEN_FILES = 128; // 128 files
-    const uint64_t LEVELDB_MAX_FILE_SIZE_MB = 1024; // 1024MB = 1GB
+    const uint64_t DATABASE_WRITE_BUFFER_MB_DEFAULT_SIZE = 256; // 256 GB
+    const uint64_t DATABASE_READ_BUFFER_MB_DEFAULT_SIZE = 128; // 128 GB
+    const uint32_t DATABASE_DEFAULT_MAX_OPEN_FILES = 125; // 125 files
+    const uint16_t DATABASE_DEFAULT_BACKGROUND_THREADS_COUNT = 4; // 4 DB threads
 
 const char     LATEST_VERSION_URL[]                          = "http://latest.cryptopay.org.za";
 const std::string LICENSE_URL                                = "https://github.com/devafrica/cpacoin/blob/master/LICENSE";

@@ -1,6 +1,5 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -215,21 +214,6 @@ namespace CryptoNote
         tx_extra.resize(tx_extra.size() + 2 + extra_nonce.size());
         // write tag
         tx_extra[start_pos] = TX_EXTRA_NONCE;
-        // write len
-        ++start_pos;
-        tx_extra[start_pos] = static_cast<uint8_t>(extra_nonce.size());
-        // write data
-        ++start_pos;
-        memcpy(&tx_extra[start_pos], extra_nonce.data(), extra_nonce.size());
-        return true;
-    }
-
-    bool addPoolNonceToTransactionExtra(std::vector<uint8_t> &tx_extra, const BinaryArray &extra_nonce)
-    {
-        size_t start_pos = tx_extra.size();
-        tx_extra.resize(tx_extra.size() + 2 + extra_nonce.size());
-        // write tag
-        tx_extra[start_pos] = TX_EXTRA_POOL;
         // write len
         ++start_pos;
         tx_extra[start_pos] = static_cast<uint8_t>(extra_nonce.size());

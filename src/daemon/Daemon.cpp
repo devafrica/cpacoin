@@ -1,7 +1,6 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018, The Karai Developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 // Copyright (c) 2019, The CyprusCoin Developers
 //
 // Please see the included LICENSE file for more information.
@@ -22,7 +21,6 @@
 #include "cryptonotecore/DatabaseBlockchainCache.h"
 #include "cryptonotecore/DatabaseBlockchainCacheFactory.h"
 #include "cryptonotecore/MainChainStorage.h"
-#include "cryptonotecore/LevelDBWrapper.h"
 #include "cryptonotecore/RocksDBWrapper.h"
 #include "cryptonoteprotocol/CryptoNoteProtocolHandler.h"
 #include "p2p/NetNode.h"
@@ -187,7 +185,7 @@ int main(int argc, char *argv[])
             config.dataDirectory + "/" + CryptoNote::parameters::P2P_NET_DATA_FILENAME,
             config.dataDirectory + "/DB"};
 
-        for (const auto &path : removablePaths)
+        for (const auto path : removablePaths)
         {
             fs::remove_all(fs::path(path), ec);
 
@@ -300,15 +298,14 @@ int main(int argc, char *argv[])
         }
         CryptoNote::Currency currency = currencyBuilder.currency();
 
-        DataBaseConfig dbConfig(
+        DataBaseConfig dbConfig;
+        dbConfig.init(
             config.dataDirectory,
             config.dbThreads,
             config.dbMaxOpenFiles,
             config.dbWriteBufferSizeMB,
             config.dbReadCacheSizeMB,
-            config.dbMaxFileSizeMB,
-            config.enableDbCompression
-        );
+            config.enableDbCompression);
 
         /* If we were told to rewind the blockchain to a certain height
            we will remove blocks until we're back at the height specified */
@@ -361,33 +358,23 @@ int main(int argc, char *argv[])
             config.seedNodes,
             config.p2pResetPeerstate);
 
-        if (!Tools::create_directories_if_necessary(dbConfig.dataDir))
+        if (!Tools::create_directories_if_necessary(dbConfig.getDataDir()))
         {
-            throw std::runtime_error("Can't create directory: " + dbConfig.dataDir);
+            throw std::runtime_error("Can't create directory: " + dbConfig.getDataDir());
         }
 
-        std::shared_ptr<IDataBase> database;
+        RocksDBWrapper database(logManager);
+        database.init(dbConfig);
+        Tools::ScopeExit dbShutdownOnExit([&database]() { database.shutdown(); });
 
-        if (config.enableLevelDB)
-        {
-            database = std::make_shared<LevelDBWrapper>(logManager);
-        }
-        else
-        {
-            database = std::make_shared<RocksDBWrapper>(logManager);
-        }
-
-        database->init(dbConfig);
-        Tools::ScopeExit dbShutdownOnExit([&database]() { database->shutdown(); });
-
-        if (!DatabaseBlockchainCache::checkDBSchemeVersion(*database, logManager))
+        if (!DatabaseBlockchainCache::checkDBSchemeVersion(database, logManager))
         {
             dbShutdownOnExit.cancel();
+            database.shutdown();
 
-            database->shutdown();
-            database->destroy(dbConfig);
-            database->init(dbConfig);
+            database.destroy(dbConfig);
 
+            database.init(dbConfig);
             dbShutdownOnExit.resume();
         }
 
@@ -401,7 +388,7 @@ int main(int argc, char *argv[])
             logManager,
             std::move(checkpoints),
             dispatcher,
-            std::unique_ptr<IBlockchainCacheFactory>(new DatabaseBlockchainCacheFactory(*database, logger.getLogger())),
+            std::unique_ptr<IBlockchainCacheFactory>(new DatabaseBlockchainCacheFactory(database, logger.getLogger())),
             std::move(tmainChainStorage),
             config.transactionValidationThreads
         );
@@ -424,6 +411,13 @@ int main(int argc, char *argv[])
             logManager
         );
 
+        std::string corsDomain;
+
+        /* TODO: enable cors should not be a vector */
+        if (!config.enableCors.empty()) {
+            corsDomain = config.enableCors[0];
+        }
+
         RpcMode rpcMode = RpcMode::Default;
 
         if (config.enableBlockExplorerDetailed)
@@ -438,7 +432,7 @@ int main(int argc, char *argv[])
         RpcServer rpcServer(
             config.rpcPort,
             config.rpcInterface,
-            config.enableCors,
+            corsDomain,
             config.feeAddress,
             config.feeAmount,
             rpcMode,
@@ -473,7 +467,7 @@ int main(int argc, char *argv[])
             ip = "127.0.0.1";
         }
 
-        DaemonCommandsHandler dch(*ccore, *p2psrv, logManager, ip, port, config);
+        DaemonCommandsHandler dch(*ccore, *p2psrv, logManager, ip, port);
 
         if (!config.noConsole)
         {

@@ -2,7 +2,6 @@
 // Copyright (c) 2018, The BBSCoin Developers
 // Copyright (c) 2018, The Karbo Developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -285,17 +284,13 @@ namespace CryptoNote
                 for (const auto &tx : blocks[i].transactions)
                 {
                     auto pubKey = tx->getTransactionPublicKey();
-                    bool isLastTransactionInBlock = blockInfo.transactionIndex + 1 == blocks[i].transactions.size();
-
-                    /* Need to ensure we add the last tx in the block even if it
-                     * has a null pub key, as we use this to indicate when we
-                     * have finished processing a block. */
-                    if (pubKey == Constants::NULL_PUBLIC_KEY && !isLastTransactionInBlock)
+                    if (pubKey == Constants::NULL_PUBLIC_KEY)
                     {
                         ++blockInfo.transactionIndex;
                         continue;
                     }
 
+                    bool isLastTransactionInBlock = blockInfo.transactionIndex + 1 == blocks[i].transactions.size();
                     Tx item = {blockInfo, tx.get(), isLastTransactionInBlock};
                     inputQueue.push(item);
                     ++blockInfo.transactionIndex;

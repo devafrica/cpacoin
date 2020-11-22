@@ -1,6 +1,5 @@
 // Copyright (c) 2012-2017, The CryptoNote developers, The Bytecoin developers
 // Copyright (c) 2018-2019, The TurtleCoin Developers
-// Copyright (c) 2018-2020, The CryptoPayAfrica Developers
 // Copyright (c) 2018, The Galaxia Project Developers
 //
 // Please see the included LICENSE file for more information.
@@ -47,7 +46,6 @@ namespace CryptoNote
             EXCESSIVE_OUTPUTS,
             WRONG_FEE,
             SIZE_TOO_LARGE,
-            MINER_OUTPUT_NOT_CLAIMED
         };
 
         // custom category:
@@ -134,8 +132,6 @@ namespace CryptoNote
                         return "Transaction fee is below minimum fee and is not a fusion transaction";
                     case TransactionValidationError::SIZE_TOO_LARGE:
                         return "Transaction is too large (in bytes)";
-                    case TransactionValidationError::MINER_OUTPUT_NOT_CLAIMED:
-                        return "Coinbase transaction derived spend key does not match supplied public spend key in tx_extra.";
                     default:
                         return "Unknown error";
                 }
