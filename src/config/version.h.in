@@ -3,7 +3,7 @@
 
 #define PROJECT_NAME "cpacoin"
 #define PROJECT_SITE "https://discord.gg/HmTCVbS"
-#define PROJECT_COPYRIGHT "Copyright 2018-2012, The CryptoPayAfrica Dev Team"
+#define PROJECT_COPYRIGHT "Copyright 2018-2020, The CryptoPayAfrica Dev Team"
 #define APP_VER_MAJOR 4
 #define APP_VER_MINOR 1
 #define APP_VER_REV 1
