@@ -66,8 +66,8 @@ However, if you wish to create _portable_ binaries that can be shared between sy
 -   `sudo apt install -y libboost-all-dev libssl-dev gcc-8 g++-8 cmake`
 -   `export CC=gcc-8`
 -   `export CXX=g++-8`
--   `git clone -b development --single-branch https://github.com/devafrica/cpacore`
--   `cd cpacore`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
+-   `cd cpacoin`
 -   `mkdir build`
 -   `cd build`
 -   `cmake ..`
@@ -99,8 +99,8 @@ The binaries will be in the `src` folder when you are complete.
 *   `sudo pip install cmake`
 *   `export CC=clang-6.0`
 *   `export CXX=clang++-6.0`
-*   `git clone -b development --single-branch https://github.com/devafrica/cpacore`
-*   `cd cpacore`
+*   `git clone -b development --single-branch https://github.com/devafrica/cpacoin
+*   `cd cpacoin`
 *   `mkdir build`
 *   `cd build`
 *   `cmake ..`
@@ -124,9 +124,9 @@ _CentOS compile instructions provided by @brandonlehmann_
 -   `./bootstrap.sh --prefix=/usr/local/`
 -   `./b2 -j$(nproc) -d0 install --with-system --with-filesystem --with-thread --with-date_time --with-chrono --with-regex --with-serialization --with-program_options`
 -   `cd ..`
--   `git clone -b development --single-branch https://github.com/devafrica/cpacore`
--   `mkdir -p cpacore/build`
--   `cd cpacore/build`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
+-   `mkdir -p cpacoin/build`
+-   `cd cpacoin/build`
 -   `cmake3 ..`
 -   `make`
 
@@ -140,8 +140,8 @@ The binaries will be in the `src` folder when you are complete.
 **Note:** If you want to use clang, ensure you set the environment variables `CC` and `CXX`.
 See the ubuntu instructions for an example.
 
--   `git clone -b development --single-branch https://github.com/devafrica/cpacore`
--   `cd cpacore`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
+-   `cd cpacoin`
 -   `mkdir build`
 -   `cd build`
 -   `cmake ..`
@@ -171,8 +171,8 @@ The binaries will be in the `src` folder when you are complete.
 -   `ln -s /usr/local/opt/llvm@8 /usr/local/opt/llvm`
 -   `export CC=/usr/local/opt/llvm@8/bin/clang`
 -   `export CXX=/usr/local/opt/llvm@8/bin/clang++`
--   `git clone -b development --single-branch https://github.com/devafrica/cpacore`
--   `cd cpacore`
+-   `git clone -b development --single-branch https://github.com/devafrica/cpacoin`
+-   `cd cpacoin`
 -   `mkdir build`
 -   `cd build`
 -   `cmake ..`
@@ -207,7 +207,7 @@ For 64-bit:
 -   `mkdir build`
 -   `cd build`
 -   `cmake -G "Visual Studio 16 2019" -A x64 .. -DBOOST_ROOT=C:/local/boost_1_69_0`
--   `MSBuild cpacore.sln /p:Configuration=Release /p:PlatformToolset=v141 /m` or `MSBuild src\cli.vcxproj /p:Configuration=Release /p:PlatformToolset=v141 /m`
+-   `MSBuild cpacoin.sln /p:Configuration=Release /p:PlatformToolset=v141 /m` or `MSBuild src\cli.vcxproj /p:Configuration=Release /p:PlatformToolset=v141 /m`
 
 For 32-bit:
 
