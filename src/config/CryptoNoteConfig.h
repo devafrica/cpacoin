@@ -88,17 +88,17 @@ const uint64_t MAXIMUM_MIXIN_V1                              = 3;
 const uint64_t MINIMUM_MIXIN_V2                              = 1;
 const uint64_t MAXIMUM_MIXIN_V2                              = 12;
 
-const uint64_t MINIMUM_MIXIN_V3                              = 3;
-const uint64_t MAXIMUM_MIXIN_V3                              = 50;
+const uint64_t MINIMUM_MIXIN_V3                              = 0;
+const uint64_t MAXIMUM_MIXIN_V3                              = 19;
 
 /* The heights to activate the mixin limits at */
 const uint32_t MIXIN_LIMITS_V1_HEIGHT                        = 0;
 const uint32_t MIXIN_LIMITS_V2_HEIGHT                        = 10000;
-const uint32_t MIXIN_LIMITS_V3_HEIGHT                        = 50000;
+const uint32_t MIXIN_LIMITS_V3_HEIGHT                        = 20000;
 
 /* The mixin to use by default with cpawallet and cpa-service */
 /* DEFAULT_MIXIN_V0 is the mixin used before MIXIN_LIMITS_V1_HEIGHT is started */
-const uint64_t DEFAULT_MIXIN_V0                              = 3;
+const uint64_t DEFAULT_MIXIN_V0                              = 0;
 const uint64_t DEFAULT_MIXIN_V1                              = MAXIMUM_MIXIN_V1;
 const uint64_t DEFAULT_MIXIN_V2                              = MAXIMUM_MIXIN_V2;
 const uint64_t DEFAULT_MIXIN_V3                              = MAXIMUM_MIXIN_V3;
@@ -205,6 +205,7 @@ const uint64_t FORK_HEIGHTS[] =
     10000, // 8
     15000, //9
     20000, //10
+    200000, //11
 
 };
 
