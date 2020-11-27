@@ -321,6 +321,7 @@ const char* const SEED_NODES[] = {
 "142.93.201.191:13290", // Gemsbok
 "138.68.31.205:13290" ,// Rhino}
 "144.76.26.181:13290" ,// Andreas}
+"135.181.62.60" ,// Eskal}
 
 };
 } // CryptoNote
