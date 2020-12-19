@@ -136,7 +136,7 @@ const uint64_t MAX_EXTRA_SIZE_V2_HEIGHT                      = 1;
 
         const uint64_t MAX_OUTPUT_SIZE_CLIENT = 1'000'000'00;
 
-        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 150000;
+        const uint64_t MAX_OUTPUT_SIZE_HEIGHT = 50000;
 
 
 /* For new projects forked from this code base, the values immediately below
